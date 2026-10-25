@@ -102,6 +102,9 @@ const html = `<!DOCTYPE html>
   .diff .label{font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);display:block;margin-bottom:.2rem}
   del{background:#fbdcd8;text-decoration:line-through}
   ins{background:#d9efdf;text-decoration:none}
+  del.ws,ins.ws{display:inline-block;width:.32em;height:1em;vertical-align:-.12em;text-decoration:none}
+  del.ws{background:#e8a49b;box-shadow:0 0 0 1px #c0392b}
+  ins.ws{background:#9fd3ad;box-shadow:0 0 0 1px #1e7a3f}
   mark.focus{background:#fff3a3;border-radius:2px;padding:0;box-shadow:none}
   .actions{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.6rem}
   .actions button{font:inherit;font-size:.85rem;padding:.4rem .8rem;border-radius:.35rem;border:1px solid var(--line);background:var(--bg);cursor:pointer}
@@ -188,7 +191,14 @@ const save = () => store.set(KEY, JSON.stringify(state));
 
 const esc = (s) => s.replace(/[&<>]/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
 const diff = (a, b) => {
-  if (a.length > 1200 || b.length > 1200) return esc(a) + " → " + esc(b);
+  if (a.length > 1200 || b.length > 1200) {
+    let p = 0;
+    while (p < Math.min(a.length, b.length) && a[p] === b[p]) p += 1;
+    const from = Math.max(0, p - 200);
+    const sliceA = a.slice(from, from + 600);
+    const sliceB = b.slice(from, from + 600 + Math.max(0, b.length - a.length));
+    return (from > 0 ? "… " : "") + diff(sliceA, sliceB) + " …";
+  }
   const aw = Array.from(a), bw = Array.from(b);
   const n = aw.length, m = bw.length;
   const lcs = Array.from({length:n+1}, () => new Uint16Array(m+1));
@@ -205,8 +215,8 @@ const diff = (a, b) => {
   let out = start > 0 ? "… " : "";
   for (const token of tokens.slice(start, end)) {
     if (token.t === "eq") out += esc(token.c);
-    else if (token.t === "del") out += "<del>" + esc(token.c) + "</del>";
-    else out += "<ins>" + esc(token.c) + "</ins>";
+    else if (token.t === "del") out += "<del" + (/\\s/.test(token.c) ? ' class="ws"' : "") + ">" + esc(token.c) + "</del>";
+    else out += "<ins" + (/\\s/.test(token.c) ? ' class="ws"' : "") + ">" + esc(token.c) + "</ins>";
   }
   if (end < tokens.length) out += " …";
   return out;
@@ -217,19 +227,56 @@ const focusEditor = (original, corrected) => {
   const n = a.length, m = b.length;
   const lcs = Array.from({length:n+1}, () => new Uint16Array(m+1));
   for (let i=n-1;i>=0;i--) for (let j=m-1;j>=0;j--) lcs[i][j] = a[i]===b[j] ? lcs[i+1][j+1]+1 : Math.max(lcs[i+1][j], lcs[i][j+1]);
-  let i=0,j=0,start=null,end=null;
-  while (i<n && j<m) {
-    if (a[i]===b[j]) { i++; j++; continue; }
-    if (start===null) start=j;
-    if (lcs[i+1][j] >= lcs[i][j+1]) { i++; end=j; } else { j++; end=j; }
+  const runs = [];
+  let current = null;
+  const close = () => { if (current) { runs.push(current); current = null; } };
+  let i = 0, j = 0;
+  while (i < n && j < m) {
+    if (a[i] === b[j]) { i++; j++; close(); continue; }
+    if (!current) current = { s: j, e: j };
+    if (lcs[i+1][j] >= lcs[i][j+1]) { i++; current.e = Math.max(current.e, j); }
+    else { j++; current.e = j; }
   }
-  while (j<m) { if (start===null) start=j; j++; end=j; }
-  if (start===null) return esc(corrected);
-  if (end===null || end<=start) end = Math.min(b.length, start+1);
-  while (start < end && /\s/.test(b[start])) start += 1;
-  while (end > start && /\s/.test(b[end - 1])) end -= 1;
-  if (start >= end) return esc(corrected);
-  return esc(b.slice(0,start).join("")) + '<mark class="focus">' + esc(b.slice(start,end).join("")) + "</mark>" + esc(b.slice(end).join(""));
+  while (i < n) { if (!current) current = { s: j, e: j }; i++; current.e = Math.max(current.e, j); }
+  while (j < m) { if (!current) current = { s: j, e: j }; j++; current.e = j; }
+  close();
+  if (!runs.length) return esc(corrected);
+
+  const expand = (run) => {
+    let s = run.s, e = run.e;
+    if (e <= s) e = Math.min(b.length, s + 1);
+    while (e - s < 6) {
+      if (s > 0) s -= 1;
+      else if (e < b.length) e += 1;
+      else break;
+    }
+    let ws = s, we = e;
+    while (ws > 0 && !/\s/.test(b[ws-1])) ws -= 1;
+    while (we < b.length && !/\s/.test(b[we])) we += 1;
+    if (we - ws <= 40) { s = ws; e = we; }
+    while (s < e && /\s/.test(b[s])) s += 1;
+    while (e > s && /\s/.test(b[e-1])) e -= 1;
+    return { s, e };
+  };
+
+  const merged = [];
+  for (const run of runs) {
+    const range = expand(run);
+    if (range.e <= range.s) continue;
+    const last = merged[merged.length - 1];
+    if (last && range.s <= last.e) last.e = Math.max(last.e, range.e);
+    else merged.push(range);
+  }
+  if (!merged.length) return esc(corrected);
+
+  let out = "", pos = 0;
+  for (const range of merged) {
+    out += esc(b.slice(pos, range.s).join(""));
+    out += '<mark class="focus">' + esc(b.slice(range.s, range.e).join("")) + "</mark>";
+    pos = range.e;
+  }
+  out += esc(b.slice(pos).join(""));
+  return out;
 };
 
 const cards = document.getElementById("cards");
