@@ -102,14 +102,14 @@ const html = `<!DOCTYPE html>
   .diff .label{font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);display:block;margin-bottom:.2rem}
   del{background:#fbdcd8;text-decoration:line-through}
   ins{background:#d9efdf;text-decoration:none}
-  mark.focus{background:#fff3a3;padding:2px 1px;border-radius:2px;box-shadow:0 0 0 1px #f0d264}
+  mark.focus{background:#fff3a3;border-radius:2px;padding:0;box-shadow:none}
   .actions{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.6rem}
   .actions button{font:inherit;font-size:.85rem;padding:.4rem .8rem;border-radius:.35rem;border:1px solid var(--line);background:var(--bg);cursor:pointer}
   .actions button[aria-pressed="true"][data-set="accepted"]{background:var(--green);border-color:var(--green);color:#fff}
   .actions button[aria-pressed="true"][data-set="rejected"]{background:var(--red);border-color:var(--red);color:#fff}
   .editor{width:100%;min-height:8rem;font:inherit;font-size:.92rem;line-height:1.5;border:1px solid var(--line);border-radius:.35rem;padding:.5rem .6rem;background:var(--bg);margin-top:.4rem;white-space:pre-wrap}
   .editor:focus{outline:2px solid var(--gold);outline-offset:1px}
-  .editor mark.focus{background:#fff3a3;box-shadow:0 0 0 1px #f0d264;border-radius:2px}
+  .editor mark.focus{background:#fff3a3;box-shadow:none;border-radius:2px;padding:0}
   details.custom{background:var(--surface);border:1px solid var(--line);border-radius:.5rem;padding:1rem 1.25rem;margin-top:2rem}
   details.custom summary{cursor:pointer;font-weight:600}
   select{font:inherit;font-size:.9rem;padding:.4rem;border:1px solid var(--line);border-radius:.35rem;max-width:100%}
@@ -226,6 +226,9 @@ const focusEditor = (original, corrected) => {
   while (j<m) { if (start===null) start=j; j++; end=j; }
   if (start===null) return esc(corrected);
   if (end===null || end<=start) end = Math.min(b.length, start+1);
+  while (start < end && /\s/.test(b[start])) start += 1;
+  while (end > start && /\s/.test(b[end - 1])) end -= 1;
+  if (start >= end) return esc(corrected);
   return esc(b.slice(0,start).join("")) + '<mark class="focus">' + esc(b.slice(start,end).join("")) + "</mark>" + esc(b.slice(end).join(""));
 };
 
