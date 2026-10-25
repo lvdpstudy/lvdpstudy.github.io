@@ -39,9 +39,11 @@
   const MIN_FONT = 14;
   const MAX_FONT = 20;
   let fontSize = Number(store.get("dp-font", "16")) || 16;
+  const requestedFont = Number(new URLSearchParams(window.location.search).get("font"));
+  if (requestedFont >= MIN_FONT && requestedFont <= MAX_FONT) fontSize = requestedFont;
   const applyFont = () => {
     fontSize = Math.min(MAX_FONT, Math.max(MIN_FONT, fontSize));
-    root.style.fontSize = `${fontSize}px`;
+    root.style.setProperty("--font-step", `${fontSize - 16}px`);
   };
   applyFont();
 

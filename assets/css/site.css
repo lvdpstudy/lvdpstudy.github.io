@@ -62,7 +62,7 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family: var(--font);
-  font-size: 1.75rem;
+  font-size: calc(1.75rem + var(--font-step, 0px));
   line-height: 1.6;
   padding-top: calc(var(--topbar-h) + var(--header-h));
 }
@@ -541,7 +541,7 @@ html.dark .drawer-nav summary:hover { background: rgba(255, 255, 255, .08); }
 /* -------------------------------------------------------------- mobile */
 
 @media (max-width: 1024px) {
-  body { font-size: 1.4rem; }
+  body { font-size: calc(1.4rem + var(--font-step, 0px)); }
   .container { padding: 1.75rem 1.15rem 3rem; }
   .page-title, .home-title { font-size: 2.2rem; }
   .eyebrow { font-size: 1.5rem; }
