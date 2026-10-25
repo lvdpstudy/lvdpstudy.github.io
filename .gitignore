@@ -1,0 +1,5 @@
+.work/
+_probe/
+*.tmp
+Thumbs.db
+.DS_Store

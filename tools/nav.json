@@ -1,0 +1,84 @@
+{
+  "site": {
+    "title": "Dievišķais Princips",
+    "tagline": "Principa studijas un prakse",
+    "base": "/lv/dp/"
+  },
+  "parts": [
+    {
+      "title": null,
+      "pages": [
+        { "slug": "preface", "title": "Priekšvārds" },
+        { "slug": "introduction", "title": "Ievads" }
+      ]
+    },
+    {
+      "title": "I daļa",
+      "pages": [
+        {
+          "slug": "principle-of-creation",
+          "title": "1. nodaļa. Radīšanas princips",
+          "sections": [
+            {
+              "slug": "the-dual-characteristics-of-god-and-the-created-universe",
+              "title": "1. iedaļa. Dieva duālās īpašības un Viņa radītā pasaule"
+            },
+            {
+              "slug": "upe-gta-4pf",
+              "title": "2. iedaļa. Universālais sākotnējais spēks, došanas un saņemšanas darbība un četrpozīciju pamats"
+            },
+            {
+              "slug": "purpose-of-creation",
+              "title": "3. iedaļa. Radības mērķis"
+            },
+            {
+              "slug": "original-value",
+              "title": "4. iedaļa. Sākotnējā vērtība"
+            },
+            {
+              "slug": "the-process-of-the-creation-of-the-universe-and-its-growing-period",
+              "title": "5. iedaļa. Pasaules radīšanas process un tās attīstības periods"
+            },
+            {
+              "slug": "the-incorporeal-world-and-the-corporeal-world",
+              "title": "6. iedaļa. Neredzamā substanciālā pasaule un redzamā substanciālā pasaule, kuru centrs ir cilvēks"
+            }
+          ]
+        },
+        { "slug": "the-human-fall", "title": "2. nodaļa. Grēkākrišana" },
+        { "slug": "eschatology", "title": "3. nodaļa. Eshatoloģija un cilvēces vēsture" },
+        {
+          "slug": "chart-1-the-unfolding-manifestation-of-god-s-word-in-the-creation-of-the-universe-and-the-providence-of-restoration",
+          "title": "1. shēma. Dieva Vārda atklāšanās radīšanā un atjaunošanas providencē",
+          "type": "chart"
+        },
+        { "slug": "the-messiah", "title": "4. nodaļa. Mesija: Viņa atnākšana un Otrās atnākšanas mērķis" },
+        { "slug": "resurrection", "title": "5. nodaļa. Augšāmcelšanās" },
+        { "slug": "predestination", "title": "6. nodaļa. Predestinācija" },
+        { "slug": "christology", "title": "7. nodaļa. Kristoloģija" }
+      ]
+    },
+    {
+      "title": "II daļa",
+      "pages": [
+        { "slug": "introduction-to-restoration", "title": "Ievads atjaunošanā" },
+        { "slug": "the-providence-to-lay-the-foundation", "title": "1. nodaļa. Pamats atjaunošanai" },
+        { "slug": "moses-and-jesus", "title": "2. nodaļa. Mozus un Jēzus atjaunošanas providencē" },
+        { "slug": "the-periods-in-providential-history", "title": "3. nodaļa. Periodi providenciālajā vēsturē un to ilguma noteikšana" },
+        {
+          "slug": "chart-2-parallel-providential-periods",
+          "title": "2. shēma. Paralēlie providenciālie periodi",
+          "type": "chart"
+        },
+        { "slug": "the-parallels-between-the-two-ages", "title": "4. nodaļa. Paralēles starp diviem laikmetiem atjaunošanas providencē" },
+        {
+          "slug": "chart-3-the-progress-of-history-as-guided-by-the-providence-of-restoration",
+          "title": "3. shēma. Vēstures gaita atjaunošanas providences vadībā",
+          "type": "chart"
+        },
+        { "slug": "the-period-of-preparation-for-the-second-advent-of-the-messiah", "title": "5. nodaļa. Otrās atnākšanas sagatavošanas periods" },
+        { "slug": "the-second-advent", "title": "6. nodaļa. Otrā atnākšana" }
+      ]
+    }
+  ]
+}
