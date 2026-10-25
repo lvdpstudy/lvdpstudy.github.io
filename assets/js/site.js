@@ -180,4 +180,13 @@
   if (initialVariant) {
     document.querySelector(`[data-variant="${initialVariant}"]`)?.click();
   }
+
+  /* ---------------------------------------------------- teaching colours */
+
+  const colorToggle = document.querySelector("[data-color-toggle]");
+  if (colorToggle) {
+    colorToggle.addEventListener("change", () => {
+      document.body.classList.toggle("no-colors", !colorToggle.checked);
+    });
+  }
 })();
