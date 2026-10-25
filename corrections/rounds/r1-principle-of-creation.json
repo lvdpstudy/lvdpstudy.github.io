@@ -11,91 +11,166 @@
       "category": "pareizrakstība",
       "confidence": 0.99,
       "note": "„Tādejādi” ir nepareizs; pareizi ir „Tādējādi”. Vienā nodaļā 10 vietas.",
-      "edits": [{ "find": "Tādejādi", "replace": "Tādējādi", "all": true }]
+      "edits": [
+        {
+          "find": "Tādejādi",
+          "replace": "Tādējādi",
+          "all": true
+        }
+      ]
     },
     {
       "id": "g02",
       "category": "terminoloģija",
       "confidence": 0.9,
       "note": "Termins ir „došanas un saņemšanas darbība”; „atdošanas” lietots tikai šeit.",
-      "edits": [{ "find": "Atdošanas un saņemšanas", "replace": "Došanas un saņemšanas", "all": true }]
+      "edits": [
+        {
+          "find": "Atdošanas un saņemšanas",
+          "replace": "Došanas un saņemšanas",
+          "all": true
+        }
+      ]
     },
     {
       "id": "g03",
       "category": "terminoloģija",
       "confidence": 0.9,
       "note": "Tas pats termins ar mazo burtu: „atdošanas” → „došanas”.",
-      "edits": [{ "find": "atdošanas un saņemšanas", "replace": "došanas un saņemšanas", "all": true }]
+      "edits": [
+        {
+          "find": "atdošanas un saņemšanas",
+          "replace": "došanas un saņemšanas",
+          "all": true
+        }
+      ]
     },
     {
       "id": "g04",
       "category": "tipogrāfija",
       "confidence": 0.95,
       "note": "Bībeles grāmatas numuram jābūt ar atstarpi: „1. Moz.”, nevis „1.Moz.” (12 vietas).",
-      "edits": [{ "find": "1.Moz.", "replace": "1. Moz.", "all": true }]
+      "edits": [
+        {
+          "find": "1.Moz.",
+          "replace": "1. Moz.",
+          "all": true
+        }
+      ],
+      "group": "abbr",
+      "groupNote": "Bībeles grāmatu saīsinājumi rakstāmi ar atstarpi: „1. Moz.”, nevis „1.Moz.”."
     },
     {
       "id": "g05",
       "category": "tipogrāfija",
       "confidence": 0.95,
       "note": "Tāpat „1. Kor.” ar atstarpi (3 vietas).",
-      "edits": [{ "find": "1.Kor.", "replace": "1. Kor.", "all": true }]
+      "edits": [
+        {
+          "find": "1.Kor.",
+          "replace": "1. Kor.",
+          "all": true
+        }
+      ],
+      "group": "abbr",
+      "groupNote": "Bībeles grāmatu saīsinājumi rakstāmi ar atstarpi: „1. Moz.”, nevis „1.Moz.”."
     },
     {
       "id": "g06",
       "category": "pieturzīmes",
       "confidence": 0.85,
       "note": "Atstarpe aiz atverošā pēdiņas un komats pēdiņu iekšienē; latviešu valodā komats paliek aiz noslēdzošās pēdiņas.",
-      "edits": [{ "find": "„ Mūsu Tēvs,” mēs", "replace": "„Mūsu Tēvs”, mēs" }]
+      "edits": [
+        {
+          "find": "„ Mūsu Tēvs,” mēs",
+          "replace": "„Mūsu Tēvs”, mēs"
+        }
+      ]
     },
     {
       "id": "g07",
       "category": "tipogrāfija",
       "confidence": 0.95,
       "note": "Virssrakstā pazudusi atstarpe: „sākums- dalīšanās” → „sākums-dalīšanās”.",
-      "edits": [{ "find": "„sākums- dalīšanās-vienotība”", "replace": "„sākums-dalīšanās-vienotība”" }]
+      "edits": [
+        {
+          "find": "„sākums- dalīšanās-vienotība”",
+          "replace": "„sākums-dalīšanās-vienotība”"
+        }
+      ]
     },
     {
       "id": "g08",
       "category": "saskaņa",
       "confidence": 0.9,
       "note": "Prievārds „pret” prasa datīvu: „pret pārējiem trim”, nevis „trīs”.",
-      "edits": [{ "find": "pret pārējiem trīs", "replace": "pret pārējiem trim" }]
+      "edits": [
+        {
+          "find": "pret pārējiem trīs",
+          "replace": "pret pārējiem trim"
+        }
+      ]
     },
     {
       "id": "g09",
       "category": "saskaņa",
       "confidence": 0.9,
       "note": "Tas pats ar prievārdu „ar”: „ar pārējiem trim”.",
-      "edits": [{ "find": "ar pārējiem trīs", "replace": "ar pārējiem trim" }]
+      "edits": [
+        {
+          "find": "ar pārējiem trīs",
+          "replace": "ar pārējiem trim"
+        }
+      ]
     },
     {
       "id": "g10",
       "category": "pieturzīmes",
       "confidence": 0.9,
       "note": "Komats starp teikuma priekšmetu un izteicēju nav vajadzīgs.",
-      "edits": [{ "find": "poliem, rada sfērisku", "replace": "poliem rada sfērisku" }]
+      "edits": [
+        {
+          "find": "poliem, rada sfērisku",
+          "replace": "poliem rada sfērisku"
+        }
+      ]
     },
     {
       "id": "g11",
       "category": "pieturzīmes",
       "confidence": 0.9,
       "note": "Palīgteikums nesākas ar „Dievs” — komats pēc „radīšanas” ir lieks.",
-      "edits": [{ "find": "radīšanas, Dievs viņam lika", "replace": "radīšanas Dievs viņam lika" }]
+      "edits": [
+        {
+          "find": "radīšanas, Dievs viņam lika",
+          "replace": "radīšanas Dievs viņam lika"
+        }
+      ]
     },
     {
       "id": "g12",
       "category": "leksika",
       "confidence": 0.55,
       "note": "Vārds „apreibt” latviešu valodā nav atrodams; pēc nozīmes, iespējams, „apbrīnot”. Jāapstiprina komitejai.",
-      "edits": [{ "find": "Mēs varam apreibt no dabas skaistuma", "replace": "Mēs varam apbrīnot dabas skaistumu" }]
+      "edits": [
+        {
+          "find": "Mēs varam apreibt no dabas skaistuma",
+          "replace": "Mēs varam apbrīnot dabas skaistumu"
+        }
+      ]
     },
     {
       "id": "g13",
       "category": "tipogrāfija",
       "confidence": 0.95,
       "note": "Tekstā sajauktas divas pēdiņu sistēmas: 13 vietās atverošā pēdiņa ir „“” (angļu), jābūt „„”.",
-      "edits": [{ "find": "“", "replace": "„", "all": true }]
+      "edits": [
+        {
+          "find": "“",
+          "replace": "„",
+          "all": true
+        }
+      ]
     },
     {
       "id": "g14",
@@ -103,31 +178,58 @@
       "confidence": 0.9,
       "note": "Skaitļu intervālos lietojams domuzīme (–), nevis defise: 1:4–31, 1:1–3, 8:19–22.",
       "edits": [
-        { "find": "1:4-31", "replace": "1:4–31" },
-        { "find": "1:1-3", "replace": "1:1–3" },
-        { "find": "8:19-22", "replace": "8:19–22" }
-      ]
+        {
+          "find": "1:4-31",
+          "replace": "1:4–31"
+        },
+        {
+          "find": "1:1-3",
+          "replace": "1:1–3"
+        },
+        {
+          "find": "8:19-22",
+          "replace": "8:19–22"
+        }
+      ],
+      "group": "ranges",
+      "groupNote": "Skaitļu intervālos lietojama domuzīme (–), nevis defise."
     },
     {
       "id": "g15",
       "category": "pareizrakstība",
       "confidence": 0.8,
       "note": "Grāmatas nosaukumā „grāmata” rakstāma ar mazo burtu; nodaļā 3 vietas ar lielo.",
-      "edits": [{ "find": "Pārmaiņu Grāmata", "replace": "Pārmaiņu grāmata", "all": true }]
+      "edits": [
+        {
+          "find": "Pārmaiņu Grāmata",
+          "replace": "Pārmaiņu grāmata",
+          "all": true
+        }
+      ]
     },
     {
       "id": "g16",
       "category": "pareizrakstība",
       "confidence": 0.8,
       "note": "Lokatīvā tas pats: „Pārmaiņu grāmatā”.",
-      "edits": [{ "find": "Pārmaiņu Grāmatā", "replace": "Pārmaiņu grāmatā" }]
+      "edits": [
+        {
+          "find": "Pārmaiņu Grāmatā",
+          "replace": "Pārmaiņu grāmatā"
+        }
+      ]
     },
     {
       "id": "g17",
       "category": "pieturzīmes",
       "confidence": 0.7,
       "note": "Iespraustais komats pēc „Un tā” traucē teikuma ritmu; ierosināts to svītrot.",
-      "edits": [{ "find": "Un tā, mēs uzzinājām", "replace": "Un tā mēs uzzinājām" }]
+      "edits": [
+        {
+          "find": "Un tā, mēs uzzinājām",
+          "replace": "Un tā mēs uzzinājām"
+        }
+      ]
     }
   ]
 }

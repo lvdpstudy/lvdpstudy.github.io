@@ -16,7 +16,9 @@
           "find": "1.Moz.1:26",
           "replace": "1. Moz. 1:26"
         }
-      ]
+      ],
+      "group": "abbr",
+      "groupNote": "Bībeles grāmatu saīsinājumi rakstāmi ar atstarpi: „1. Moz.”, nevis „1.Moz.”."
     },
     {
       "id": "h02",
@@ -216,7 +218,9 @@
           "find": "20:1-15",
           "replace": "20:1–15"
         }
-      ]
+      ],
+      "group": "ranges",
+      "groupNote": "Skaitļu intervālos lietojama domuzīme (–), nevis defise."
     },
     {
       "id": "h18",
@@ -229,7 +233,9 @@
           "replace": "1. Moz.",
           "all": true
         }
-      ]
+      ],
+      "group": "abbr",
+      "groupNote": "Bībeles grāmatu saīsinājumi rakstāmi ar atstarpi: „1. Moz.”, nevis „1.Moz.”."
     },
     {
       "id": "h19",
@@ -242,7 +248,9 @@
           "replace": "1. Kor.",
           "all": true
         }
-      ]
+      ],
+      "group": "abbr",
+      "groupNote": "Bībeles grāmatu saīsinājumi rakstāmi ar atstarpi: „1. Moz.”, nevis „1.Moz.”."
     },
     {
       "id": "h20",
@@ -255,7 +263,9 @@
           "replace": "Jņ. atkl.",
           "all": true
         }
-      ]
+      ],
+      "group": "jnatkl",
+      "groupNote": "„Jņ. atkl.” rakstāms ar atstarpi."
     },
     {
       "id": "h21",
@@ -268,7 +278,9 @@
           "replace": "Ap. d.",
           "all": true
         }
-      ]
+      ],
+      "group": "apd",
+      "groupNote": "„Ap. d.” rakstāms ar atstarpēm."
     },
     {
       "id": "h22",
@@ -294,7 +306,9 @@
           "replace": "Sal. pam.",
           "all": true
         }
-      ]
+      ],
+      "group": "salpam",
+      "groupNote": "„Sal. pam.” rakstāms ar atstarpēm."
     },
     {
       "id": "h24",

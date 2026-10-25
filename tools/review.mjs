@@ -47,6 +47,8 @@ for (const file of roundFiles) {
   const chapterProposals = resolved.resolved.map((proposal) => ({
     id: proposal.id,
     chapter: round.title,
+    group: proposal.group,
+    groupNote: proposal.groupNote,
     category: proposal.category,
     confidence: proposal.confidence,
     note: proposal.note,
@@ -113,6 +115,8 @@ const html = `<!DOCTYPE html>
   .editor{width:100%;min-height:8rem;font:inherit;font-size:.92rem;line-height:1.5;border:1px solid var(--line);border-radius:.35rem;padding:.5rem .6rem;background:var(--bg);margin-top:.4rem;white-space:pre-wrap}
   .editor:focus{outline:2px solid var(--gold);outline-offset:1px}
   .editor mark.focus{background:#fff3a3;box-shadow:none;border-radius:2px;padding:0}
+  details.places{margin-top:.5rem}
+  details.places summary{cursor:pointer;color:var(--link);font-size:.85rem;margin-bottom:.35rem}
   details.custom{background:var(--surface);border:1px solid var(--line);border-radius:.5rem;padding:1rem 1.25rem;margin-top:2rem}
   details.custom summary{cursor:pointer;font-weight:600}
   select{font:inherit;font-size:.9rem;padding:.4rem;border:1px solid var(--line);border-radius:.35rem;max-width:100%}
@@ -280,8 +284,63 @@ const focusEditor = (original, corrected) => {
 };
 
 const cards = document.getElementById("cards");
+
+const groups = new Map();
+for (const p of DATA.proposals) {
+  if (!p.group) continue;
+  if (!groups.has(p.group)) groups.set(p.group, []);
+  groups.get(p.group).push(p);
+}
+const groupedIds = new Set();
+const groupList = [];
+for (const [key, members] of groups) {
+  if (members.length < 2) continue;
+  groupList.push({ key, members });
+  members.forEach((m) => groupedIds.add(m.id));
+}
+
+const groupStatus = (members) => {
+  const values = members.map((m) => state.decisions[m.id] || "pending");
+  if (values.every((v) => v === "accepted")) return "accepted";
+  if (values.every((v) => v === "rejected")) return "rejected";
+  return "pending";
+};
+
+if (groupList.length) {
+  const groupHeading = document.createElement("h2");
+  groupHeading.className = "chapter";
+  groupHeading.textContent = "Visa grāmata (grupētie priekšlikumi)";
+  cards.appendChild(groupHeading);
+  for (const entry of groupList) {
+    const card = document.createElement("article");
+    card.className = "card";
+    card.dataset.group = entry.key;
+    const status = groupStatus(entry.members);
+    card.dataset.status = status;
+    const editBlocks = entry.members.flatMap((m) => m.edits.map((e) => \`
+      <div class="diff">
+        <span class="label">\${esc(m.chapter)} · \${esc(e.page)}</span>
+        \${diff(e.original, e.corrected)}
+      </div>\`)).join("");
+    const places = entry.members.reduce((n, m) => n + m.edits.length, 0);
+    const chapterCount = new Set(entry.members.map((m) => m.chapter)).size;
+    card.innerHTML = \`
+      <div class="meta"><span class="tag">\${esc(entry.members[0].category)}</span>
+        <span class="conf">\${chapterCount} nodaļas</span>
+        <span class="conf">\${places} vieta(s)</span></div>
+      <p class="note">\${esc(entry.members[0].groupNote || entry.members[0].note)}</p>
+      <details class="places"><summary>Rādīt \${places} vietas</summary>\${editBlocks}</details>
+      <div class="actions">
+        <button data-group-set="accepted" data-group="\${entry.key}" aria-pressed="\${status==="accepted"}">Pieņemt visās nodaļās</button>
+        <button data-group-set="rejected" data-group="\${entry.key}" aria-pressed="\${status==="rejected"}">Noraidīt visās nodaļās</button>
+      </div>\`;
+    cards.appendChild(card);
+  }
+}
+
 let currentChapter = null;
 for (const p of DATA.proposals) {
+  if (groupedIds.has(p.id)) continue;
   if (p.chapter !== currentChapter) {
     currentChapter = p.chapter;
     const heading = document.createElement("h2");
@@ -294,11 +353,14 @@ for (const p of DATA.proposals) {
   card.dataset.id = p.id;
   const status = state.decisions[p.id] || "pending";
   card.dataset.status = status;
-  const edits = p.edits.map((e) => \`
+  const editBlocks = p.edits.map((e) => \`
     <div class="diff">
       <span class="label">\${esc(e.page)}</span>
       \${diff(e.original, state.replace[p.id] || e.corrected)}
     </div>\`).join("");
+  const edits = p.edits.length > 4
+    ? \`<details class="places"><summary>Rādīt \${p.edits.length} vietas</summary>\${editBlocks}</details>\`
+    : editBlocks;
   const editable = p.edits.length === 1
     ? \`<div class="editor" contenteditable="true" spellcheck="true" data-replace="\${p.id}">\${focusEditor(p.edits[0].original, state.replace[p.id] || p.edits[0].corrected)}</div>\`
     : "";
@@ -326,6 +388,19 @@ const refreshStats = () => {
 refreshStats();
 
 cards.addEventListener("click", (event) => {
+  const groupButton = event.target.closest("button[data-group-set]");
+  if (groupButton) {
+    const key = groupButton.dataset.group;
+    const members = groups.get(key) || [];
+    const value = groupButton.dataset.groupSet;
+    const next = groupStatus(members) === value ? "pending" : value;
+    members.forEach((m) => { state.decisions[m.id] = next; });
+    const card = groupButton.closest(".card");
+    card.dataset.status = next;
+    card.querySelectorAll("button[data-group-set]").forEach((b) => b.setAttribute("aria-pressed", String(next === b.dataset.groupSet)));
+    save(); refreshStats();
+    return;
+  }
   const button = event.target.closest("button[data-set]");
   if (!button) return;
   const id = button.dataset.id;

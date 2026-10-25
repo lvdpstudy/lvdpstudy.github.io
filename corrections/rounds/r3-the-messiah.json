@@ -8,6 +8,8 @@
   "proposals": [
     {
       "id": "mes01",
+      "group": "abbr",
+      "groupNote": "Bībeles grāmatu saīsinājumi rakstāmi ar atstarpi: „1. Moz.”, nevis „1.Moz.”.",
       "category": "tipogrāfija",
       "confidence": 0.95,
       "note": "Bībeles grāmatu saīsinājumi rakstāmi ar atstarpi: „1. Moz.”, nevis „1.Moz.”. (8 vietas)",
@@ -21,6 +23,8 @@
     },
     {
       "id": "mes02",
+      "group": "apd",
+      "groupNote": "„Ap. d.” rakstāms ar atstarpēm.",
       "category": "tipogrāfija",
       "confidence": 0.95,
       "note": "„Ap. d.” rakstāms ar atstarpēm.",
@@ -34,6 +38,8 @@
     },
     {
       "id": "mes03",
+      "group": "ranges",
+      "groupNote": "Skaitļu intervālos lietojama domuzīme (–), nevis defise.",
       "category": "tipogrāfija",
       "confidence": 0.92,
       "note": "Skaitļu intervālos lietojama domuzīme (–), nevis defise. (15 vietas)",

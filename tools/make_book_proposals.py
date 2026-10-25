@@ -139,6 +139,8 @@ def main():
                 edit["all"] = True
             proposals.append({
                 "id": f"{code}{len(proposals) + 1:02d}",
+                "group": rule["key"],
+                "groupNote": rule["note"],
                 "category": rule["category"],
                 "confidence": rule["confidence"],
                 "note": rule["note"] + (f" ({count} vietas)" if count > 1 else ""),
