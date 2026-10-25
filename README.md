@@ -12,7 +12,7 @@ English original is `/en/dp/<same-slug>/`.
 
 | Content | State |
 | --- | --- |
-| Preface | placeholder — no Word source |
+| Preface | published — transcribed from the OCR of book page 5 |
 | Introduction | published |
 | Part I, chapters 1–7 (6 + 6 + 5 + 2 + 3 + 4 + 4 sections) | published |
 | Part II, introduction and chapters 1–6 (3 + 3 + 3 + 4 + 7 + 4 + 5 sections) | published |
