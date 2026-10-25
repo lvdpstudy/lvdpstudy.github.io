@@ -5,3 +5,5 @@ _probe/
 Thumbs.db
 .DS_Store
 review/
+__pycache__/
+*.pyc
