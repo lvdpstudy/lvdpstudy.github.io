@@ -9,9 +9,19 @@ import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { loadPages, parseBlocks, resolveAll } from "./corrections.mjs";
 
-const roundFiles = process.argv.slice(2);
+let roundFiles = process.argv.slice(2);
+let batchName = null;
+if (roundFiles[0] === "--batch") {
+  batchName = roundFiles[1];
+  if (!batchName) {
+    console.error("usage: node tools/review.mjs --batch <batch-name>");
+    process.exit(1);
+  }
+  const manifest = JSON.parse(readFileSync(join("corrections", "batches", `${batchName}.json`), "utf8"));
+  roundFiles = manifest.rounds;
+}
 if (!roundFiles.length) {
-  console.error("usage: node tools/review.mjs <round-file> [more-round-files…]");
+  console.error("usage: node tools/review.mjs <round-file> [more-round-files…] | --batch <batch-name>");
   process.exit(1);
 }
 
@@ -53,7 +63,7 @@ for (const file of roundFiles) {
 }
 
 const pack = {
-  round: "all",
+  round: batchName || "all",
   title: `visas nodaļas (${chapters.length})`,
   created: new Date().toISOString().slice(0, 10),
   chapters,
@@ -92,6 +102,9 @@ const html = `<!DOCTYPE html>
   .diff .label{font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);display:block;margin-bottom:.2rem}
   del{background:#fbdcd8;text-decoration:line-through}
   ins{background:#d9efdf;text-decoration:none}
+  mark.focus{background:#fff3a3;padding:2px 1px;border-radius:2px;box-shadow:0 0 0 1px #f0d264}
+  mark.focus del{background:#f6c7c1}
+  mark.focus ins{background:#c6e8cd}
   .actions{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.6rem}
   .actions button{font:inherit;font-size:.85rem;padding:.4rem .8rem;border-radius:.35rem;border:1px solid var(--line);background:var(--bg);cursor:pointer}
   .actions button[aria-pressed="true"][data-set="accepted"]{background:var(--green);border-color:var(--green);color:#fff}
@@ -190,11 +203,18 @@ const diff = (a, b) => {
   const start = Math.max(0, first - 40);
   const end = Math.min(tokens.length, first + 55);
   let out = start > 0 ? "… " : "";
+  let marked = false;
   for (const token of tokens.slice(start, end)) {
-    if (token.t === "eq") out += esc(token.c);
-    else if (token.t === "del") out += "<del>" + esc(token.c) + "</del>";
+    if (token.t === "eq") {
+      if (marked) { out += "</mark>"; marked = false; }
+      out += esc(token.c);
+      continue;
+    }
+    if (!marked) { out += '<mark class="focus">'; marked = true; }
+    if (token.t === "del") out += "<del>" + esc(token.c) + "</del>";
     else out += "<ins>" + esc(token.c) + "</ins>";
   }
+  if (marked) out += "</mark>";
   if (end < tokens.length) out += " …";
   return out;
 };
@@ -388,7 +408,7 @@ document.getElementById("copy-json").addEventListener("click", async () => {
 `;
 
 mkdirSync("review", { recursive: true });
-const name = roundFiles.length === 1 ? roundFiles[0] : "all-chapters";
+const name = batchName ? "all-chapters" : (roundFiles.length === 1 ? roundFiles[0] : "all-chapters");
 const target = join("review", `${name}.html`);
 writeFileSync(target, html, "utf8");
 console.log(`review pack: ${target} (${pack.proposals.length} proposals, ${pack.proposals.reduce((n, p) => n + p.edits.length, 0)} edits)`);

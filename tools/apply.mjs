@@ -33,8 +33,9 @@ const slug = (payload.reviewer || "recenzents")
   .replace(/[^a-z0-9]+/g, "-")
   .replace(/^-+|-+$/g, "") || "recenzents";
 
-const decisionsPath = join("corrections", "rounds", `r${payload.round}-decisions-${slug}.json`);
-const customPath = join("corrections", "rounds", `r${payload.round}-custom-${slug}.json`);
+const roundPrefix = /^\d+$/.test(String(payload.round)) ? `r${payload.round}` : String(payload.round);
+const decisionsPath = join("corrections", "rounds", `${roundPrefix}-decisions-${slug}.json`);
+const customPath = join("corrections", "rounds", `${roundPrefix}-custom-${slug}.json`);
 
 if (undo) {
   let removed = 0;

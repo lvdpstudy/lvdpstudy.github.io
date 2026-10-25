@@ -18,7 +18,9 @@ tekstu, gan starpību.
 
 1. **Priekšlikumi.** `corrections/rounds/r1-<nodaļa>.json` satur priekšlikumus:
    katrs norāda meklējamo tekstu (`find`) un labojumu (`replace`), kategoriju,
-   pamatojumu un pārliecību. `"all": true` aizstāj visas atrades.
+   pamatojumu un pārliecību. `"all": true` aizstāj visas atrades, bet
+   `"regex": true` ļauj vienam priekšlikumam aptvert daudzas vietas (piem.,
+   `1.Moz.` → `1. Moz.` visā nodaļā).
 2. **Recenzijas pakete.** `node tools/review.mjs r1-principle-of-creation` izveido
    vienu pašpietiekamu HTML failu mapē `review/`. Recenzents to atver pārlūkā,
    atzīmē *Pieņemt / Noraidīt*, vajadzības gadījumā labo formulējumu un nospiež
@@ -30,6 +32,25 @@ tekstu, gan starpību.
    - lapās slēdzi *Labotais / Oriģināls / Salīdzinājums*;
    - `/lv/izmainas/` — labojumu žurnālu ar pirms/pēc un pamatojumu.
 5. **Apstiprināšana.** Pēc pārbaudes izveido tagu `text-r1` un publicē.
+
+## Aplu kopas (batch)
+
+Lai visu grāmatu recenzētu vienā piegājienā, atsevišķās nodaļu aploksnes tiek
+apvienotas **kopā**: `corrections/batches/batch-1.json` uzskaita 14 aplu failus
+(`r1`, `r2` un 12 × `r3`), un paketi būvē ar vienu komandu:
+
+```powershell
+node tools/review.mjs --batch batch-1
+```
+
+Recenzents redz vienu sarakstu, sagrupētu pa nodaļām, un eksportē **vienu**
+lēmumu failu. `node tools/apply.mjs` to saglabā kā
+`corrections/rounds/batch-1-decisions-<recenzents>.json`; būvēšana piemēro
+lēmumus pēc priekšlikuma `id`, tāpēc nav svarīgi, kurā aplī tie atradās.
+
+Kāpēc aploki netiek sapludināti vienā JSON: priekšlikums vienmēr pieder kādai
+nodaļai (`scope`), un atsevisķi faili ļauj katru nodaļu labot, atcelt vai
+pārģenerēt neatkarīgi. `batch-1.json` ir tā vieta, kur kopums tiek definēts.
 
 ## Statuss
 

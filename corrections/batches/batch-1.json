@@ -1,0 +1,24 @@
+{
+  "batch": "batch-1",
+  "title": "Visa grāmata — pirmais priekšlikumu aplis",
+  "created": "2026-10-25",
+  "status": "pending_review",
+  "review_pack": "review/all-chapters.html",
+  "rounds": [
+    "r1-principle-of-creation",
+    "r2-the-human-fall",
+    "r3-eschatology",
+    "r3-the-messiah",
+    "r3-resurrection",
+    "r3-predestination",
+    "r3-christology",
+    "r3-introduction-to-restoration",
+    "r3-the-providence-to-lay-the-foundation",
+    "r3-moses-and-jesus",
+    "r3-the-periods-in-providential-history",
+    "r3-the-parallels-between-the-two-ages",
+    "r3-the-period-of-preparation-for-the-second-advent-of-the-messiah",
+    "r3-the-second-advent"
+  ],
+  "note": "Viens recenzijas aplis visai grāmatai. Katrs priekšlikums pieder savai nodaļai (round file), bet recenzents lēmumus eksportē vienā failā; tie tiek saglabāti kā batch-1-decisions-<recenzents>.json un piemēroti pēc priekšlikuma id neatkarīgi no nodaļas."
+}
