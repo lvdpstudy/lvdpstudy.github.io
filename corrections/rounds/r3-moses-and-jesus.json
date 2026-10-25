@@ -1,0 +1,62 @@
+{
+  "round": 3,
+  "scope": "moses-and-jesus",
+  "title": "2. nodaļa. Mozus un Jēzus atjaunošanas providencē",
+  "created": "2026-10-25",
+  "author": "ai",
+  "note": "Visa grāmata vienā aplī: mehāniskas tipogrāfijas un pareizrakstības korekcijas.",
+  "proposals": [
+    {
+      "id": "moj01",
+      "category": "tipogrāfija",
+      "confidence": 0.95,
+      "note": "Bībeles grāmatu saīsinājumi rakstāmi ar atstarpi: „1. Moz.”, nevis „1.Moz.”. (145 vietas)",
+      "edits": [
+        {
+          "find": "(\\d)\\.([A-ZĀ-Ž][a-zā-ž]{1,12})\\.",
+          "replace": "$1. $2.",
+          "regex": true
+        }
+      ]
+    },
+    {
+      "id": "moj02",
+      "category": "tipogrāfija",
+      "confidence": 0.95,
+      "note": "„Jņ. atkl.” rakstāms ar atstarpi. (9 vietas)",
+      "edits": [
+        {
+          "find": "Jņ.atkl.",
+          "replace": "Jņ. atkl.",
+          "all": true
+        }
+      ]
+    },
+    {
+      "id": "moj03",
+      "category": "tipogrāfija",
+      "confidence": 0.95,
+      "note": "„Ap. d.” rakstāms ar atstarpēm. (5 vietas)",
+      "edits": [
+        {
+          "find": "Ap.d.",
+          "replace": "Ap. d.",
+          "all": true
+        }
+      ]
+    },
+    {
+      "id": "moj04",
+      "category": "tipogrāfija",
+      "confidence": 0.92,
+      "note": "Skaitļu intervālos lietojama domuzīme (–), nevis defise. (33 vietas)",
+      "edits": [
+        {
+          "find": "(\\d+):(\\d+)-(\\d+)",
+          "replace": "$1:$2–$3",
+          "regex": true
+        }
+      ]
+    }
+  ]
+}

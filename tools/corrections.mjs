@@ -78,17 +78,29 @@ export function loadPages(scope, nav) {
   return pages;
 }
 
-function locate(pages, find, replace, all) {
+function locate(pages, edit) {
+  const { find, replace } = edit;
+  const all = Boolean(edit.all);
+  const isRegex = Boolean(edit.regex);
   const hits = [];
   for (const page of pages) {
     page.blocks.forEach((block, index) => {
       if (block.kind !== "p" && block.kind !== "fn" && block.kind !== "h") return;
-      const count = block.text.split(find).length - 1;
-      if (!count) return;
-      if (!all && count > 1) {
-        throw new Error(`ambiguous find (${count}x in one paragraph): ${find.slice(0, 60)}`);
+      let count;
+      let corrected;
+      if (isRegex) {
+        const matches = block.text.match(new RegExp(find, "g"));
+        count = matches ? matches.length : 0;
+        if (!count) return;
+        corrected = block.text.replace(new RegExp(find, "g"), replace);
+      } else {
+        count = block.text.split(find).length - 1;
+        if (!count) return;
+        if (!all && count > 1) {
+          throw new Error(`ambiguous find (${count}x in one paragraph): ${find.slice(0, 60)}`);
+        }
+        corrected = all ? block.text.split(find).join(replace) : block.text.replace(find, replace);
       }
-      const corrected = all ? block.text.split(find).join(replace) : block.text.replace(find, replace);
       hits.push({
         page: page.slug,
         blockIndex: index,
@@ -99,11 +111,12 @@ function locate(pages, find, replace, all) {
         find,
         replace,
         all,
+        regex: isRegex,
       });
     });
   }
   if (!hits.length) throw new Error(`find not found: ${find.slice(0, 60)}`);
-  if (!all && hits.length > 1) {
+  if (!all && !isRegex && hits.length > 1) {
     throw new Error(`ambiguous find (${hits.length} paragraphs): ${find.slice(0, 60)}`);
   }
   return hits;
@@ -135,7 +148,7 @@ export function resolveAll(nav, root = CORRECTIONS) {
     const resolved = round.data.proposals.map((proposal) => {
       const edits = [];
       for (const edit of proposal.edits) {
-        edits.push(...locate(pages, edit.find, edit.replace, Boolean(edit.all)));
+        edits.push(...locate(pages, edit));
       }
       return { ...proposal, edits };
     });
@@ -190,6 +203,14 @@ export function acceptedEdits(nav, root = CORRECTIONS) {
         let next;
         if (overrides.has(proposal.id) && proposal.edits.length === 1) {
           next = overrides.get(proposal.id);
+        } else if (edit.regex) {
+          const regex = new RegExp(edit.find, "g");
+          if (current.match(regex)) {
+            next = current.replace(new RegExp(edit.find, "g"), edit.replace);
+          } else {
+            next = current;
+            conflicts.push({ id: proposal.id, previous: "regex gone", next: edit.find.slice(0, 40), file: round.file });
+          }
         } else if (edit.all) {
           next = current.split(edit.find).join(edit.replace);
         } else if (current.includes(edit.find)) {

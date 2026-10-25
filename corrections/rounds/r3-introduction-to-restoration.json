@@ -1,0 +1,36 @@
+{
+  "round": 3,
+  "scope": "introduction-to-restoration",
+  "title": "2. daļa. Ievads",
+  "created": "2026-10-25",
+  "author": "ai",
+  "note": "Visa grāmata vienā aplī: mehāniskas tipogrāfijas un pareizrakstības korekcijas.",
+  "proposals": [
+    {
+      "id": "itr01",
+      "category": "tipogrāfija",
+      "confidence": 0.95,
+      "note": "Bībeles grāmatu saīsinājumi rakstāmi ar atstarpi: „1. Moz.”, nevis „1.Moz.”. (2 vietas)",
+      "edits": [
+        {
+          "find": "(\\d)\\.([A-ZĀ-Ž][a-zā-ž]{1,12})\\.",
+          "replace": "$1. $2.",
+          "regex": true
+        }
+      ]
+    },
+    {
+      "id": "itr02",
+      "category": "tipogrāfija",
+      "confidence": 0.92,
+      "note": "Skaitļu intervālos lietojama domuzīme (–), nevis defise.",
+      "edits": [
+        {
+          "find": "(\\d+):(\\d+)-(\\d+)",
+          "replace": "$1:$2–$3",
+          "regex": true
+        }
+      ]
+    }
+  ]
+}

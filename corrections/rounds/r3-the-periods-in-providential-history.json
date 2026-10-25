@@ -1,0 +1,36 @@
+{
+  "round": 3,
+  "scope": "the-periods-in-providential-history",
+  "title": "3. nodaļa. Providenciālās vēstures periodi un to ilguma noteikšana",
+  "created": "2026-10-25",
+  "author": "ai",
+  "note": "Visa grāmata vienā aplī: mehāniskas tipogrāfijas un pareizrakstības korekcijas.",
+  "proposals": [
+    {
+      "id": "pph01",
+      "category": "tipogrāfija",
+      "confidence": 0.95,
+      "note": "Bībeles grāmatu saīsinājumi rakstāmi ar atstarpi: „1. Moz.”, nevis „1.Moz.”. (13 vietas)",
+      "edits": [
+        {
+          "find": "(\\d)\\.([A-ZĀ-Ž][a-zā-ž]{1,12})\\.",
+          "replace": "$1. $2.",
+          "regex": true
+        }
+      ]
+    },
+    {
+      "id": "pph02",
+      "category": "tipogrāfija",
+      "confidence": 0.92,
+      "note": "Skaitļu intervālos lietojama domuzīme (–), nevis defise. (3 vietas)",
+      "edits": [
+        {
+          "find": "(\\d+):(\\d+)-(\\d+)",
+          "replace": "$1:$2–$3",
+          "regex": true
+        }
+      ]
+    }
+  ]
+}

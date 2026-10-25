@@ -9,31 +9,34 @@ import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { loadPages, parseBlocks, resolveAll } from "./corrections.mjs";
 
-const [roundFile] = process.argv.slice(2);
-if (!roundFile) {
-  console.error("usage: node tools/review.mjs <round-file-name-without-.json>");
+const roundFiles = process.argv.slice(2);
+if (!roundFiles.length) {
+  console.error("usage: node tools/review.mjs <round-file> [more-round-files…]");
   process.exit(1);
 }
 
 const nav = JSON.parse(readFileSync("tools/nav.json", "utf8"));
-const round = JSON.parse(readFileSync(join("corrections", "rounds", `${roundFile}.json`), "utf8"));
-const resolved = resolveAll(nav).find((item) => item.round === round.round);
-const pages = loadPages(round.scope, nav);
+const resolvedAll = resolveAll(nav);
+const chapters = [];
+const pages = [];
+const proposals = [];
 
-const pack = {
-  round: round.round,
-  scope: round.scope,
-  title: round.title,
-  created: round.created,
-  pages: pages.map((page) => ({
+for (const file of roundFiles) {
+  const round = JSON.parse(readFileSync(join("corrections", "rounds", `${file}.json`), "utf8"));
+  const resolved = resolvedAll.find((item) => item.file === `${file}.json`);
+  if (!resolved) throw new Error(`round not resolved: ${file}`);
+  const chapterPages = loadPages(round.scope, nav).map((page) => ({
+    key: `${round.scope}/${page.slug}`,
     slug: page.slug,
+    scope: round.scope,
     title: page.title,
     paragraphs: parseBlocks(readFileSync(page.path, "utf8"))
       .map((block, index) => ({ index, kind: block.kind, text: block.text }))
       .filter((block) => block.kind === "p"),
-  })),
-  proposals: resolved.resolved.map((proposal) => ({
+  }));
+  const chapterProposals = resolved.resolved.map((proposal) => ({
     id: proposal.id,
+    chapter: round.title,
     category: proposal.category,
     confidence: proposal.confidence,
     note: proposal.note,
@@ -43,7 +46,19 @@ const pack = {
       corrected: edit.corrected,
       hash: edit.hash,
     })),
-  })),
+  }));
+  chapters.push({ scope: round.scope, title: round.title, count: chapterProposals.length });
+  pages.push(...chapterPages);
+  proposals.push(...chapterProposals);
+}
+
+const pack = {
+  round: "all",
+  title: `visas nodaļas (${chapters.length})`,
+  created: new Date().toISOString().slice(0, 10),
+  chapters,
+  pages,
+  proposals,
 };
 
 const html = `<!DOCTYPE html>
@@ -86,6 +101,7 @@ const html = `<!DOCTYPE html>
   details.custom summary{cursor:pointer;font-weight:600}
   select{font:inherit;font-size:.9rem;padding:.4rem;border:1px solid var(--line);border-radius:.35rem;max-width:100%}
   .muted{color:var(--muted);font-size:.85rem}
+  .chapter{margin:2.25rem 0 .75rem;font-size:1.05rem;color:var(--gold);font-weight:650;letter-spacing:.02em}
   .ver{font-size:.68rem;color:var(--muted);border:1px solid var(--line);border-radius:99px;padding:.05rem .45rem;vertical-align:middle;font-weight:400}
   .status{font-size:.8rem;color:var(--gold);max-width:26rem}
   details.json{background:var(--surface);border:1px solid var(--line);border-radius:.5rem;padding:1rem 1.25rem;margin-top:1.5rem}
@@ -184,7 +200,15 @@ const diff = (a, b) => {
 };
 
 const cards = document.getElementById("cards");
+let currentChapter = null;
 for (const p of DATA.proposals) {
+  if (p.chapter !== currentChapter) {
+    currentChapter = p.chapter;
+    const heading = document.createElement("h2");
+    heading.className = "chapter";
+    heading.textContent = p.chapter;
+    cards.appendChild(heading);
+  }
   const card = document.createElement("article");
   card.className = "card";
   card.dataset.id = p.id;
@@ -250,12 +274,12 @@ const paraSel = document.getElementById("custom-para");
 const customText = document.getElementById("custom-text");
 DATA.pages.forEach((page) => {
   const option = document.createElement("option");
-  option.value = page.slug;
+  option.value = page.key;
   option.textContent = page.title;
   pageSel.appendChild(option);
 });
 const fillParas = () => {
-  const page = DATA.pages.find((p) => p.slug === pageSel.value);
+  const page = DATA.pages.find((p) => p.key === pageSel.value);
   paraSel.innerHTML = "";
   page.paragraphs.forEach((para) => {
     const option = document.createElement("option");
@@ -266,7 +290,7 @@ const fillParas = () => {
   syncCustom();
 };
 const syncCustom = () => {
-  const page = DATA.pages.find((p) => p.slug === pageSel.value);
+  const page = DATA.pages.find((p) => p.key === pageSel.value);
   const para = page.paragraphs.find((p) => p.index === Number(paraSel.value));
   customText.value = para ? para.text : "";
 };
@@ -274,13 +298,13 @@ pageSel.addEventListener("change", fillParas);
 paraSel.addEventListener("change", syncCustom);
 fillParas();
 document.getElementById("custom-add").addEventListener("click", () => {
-  const page = DATA.pages.find((p) => p.slug === pageSel.value);
+  const page = DATA.pages.find((p) => p.key === pageSel.value);
   const para = page.paragraphs.find((p) => p.index === Number(paraSel.value));
   if (!para || customText.value.trim() === para.text.trim()) {
     document.getElementById("custom-status").textContent = "Nav izmaiņu.";
     return;
   }
-  state.custom.push({ page: page.slug, blockIndex: para.index, original: para.text, corrected: customText.value.trim() });
+  state.custom.push({ page: page.slug, scope: page.scope, blockIndex: para.index, original: para.text, corrected: customText.value.trim() });
   save(); refreshStats();
   document.getElementById("custom-status").textContent = "Pievienots.";
 });
@@ -364,6 +388,7 @@ document.getElementById("copy-json").addEventListener("click", async () => {
 `;
 
 mkdirSync("review", { recursive: true });
-const target = join("review", `${roundFile}.html`);
+const name = roundFiles.length === 1 ? roundFiles[0] : "all-chapters";
+const target = join("review", `${name}.html`);
 writeFileSync(target, html, "utf8");
 console.log(`review pack: ${target} (${pack.proposals.length} proposals, ${pack.proposals.reduce((n, p) => n + p.edits.length, 0)} edits)`);

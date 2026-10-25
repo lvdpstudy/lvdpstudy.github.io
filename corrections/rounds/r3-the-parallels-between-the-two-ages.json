@@ -1,0 +1,49 @@
+{
+  "round": 3,
+  "scope": "the-parallels-between-the-two-ages",
+  "title": "4. nodaļa. Atjaunošanas laikmets un atjaunošanas pagarināšanas laikmets providenciālā laika identiskuma skatījumā",
+  "created": "2026-10-25",
+  "author": "ai",
+  "note": "Visa grāmata vienā aplī: mehāniskas tipogrāfijas un pareizrakstības korekcijas.",
+  "proposals": [
+    {
+      "id": "pta01",
+      "category": "tipogrāfija",
+      "confidence": 0.95,
+      "note": "Bībeles grāmatu saīsinājumi rakstāmi ar atstarpi: „1. Moz.”, nevis „1.Moz.”. (11 vietas)",
+      "edits": [
+        {
+          "find": "(\\d)\\.([A-ZĀ-Ž][a-zā-ž]{1,12})\\.",
+          "replace": "$1. $2.",
+          "regex": true
+        }
+      ]
+    },
+    {
+      "id": "pta02",
+      "category": "tipogrāfija",
+      "confidence": 0.95,
+      "note": "„Jņ. atkl.” rakstāms ar atstarpi.",
+      "edits": [
+        {
+          "find": "Jņ.atkl.",
+          "replace": "Jņ. atkl.",
+          "all": true
+        }
+      ]
+    },
+    {
+      "id": "pta03",
+      "category": "tipogrāfija",
+      "confidence": 0.92,
+      "note": "Skaitļu intervālos lietojama domuzīme (–), nevis defise. (8 vietas)",
+      "edits": [
+        {
+          "find": "(\\d+):(\\d+)-(\\d+)",
+          "replace": "$1:$2–$3",
+          "regex": true
+        }
+      ]
+    }
+  ]
+}

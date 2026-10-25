@@ -1,0 +1,49 @@
+{
+  "round": 3,
+  "scope": "the-messiah",
+  "title": "4. nodaļa. Mesija: viņa atnākšanas nozīme un mērķis",
+  "created": "2026-10-25",
+  "author": "ai",
+  "note": "Visa grāmata vienā aplī: mehāniskas tipogrāfijas un pareizrakstības korekcijas.",
+  "proposals": [
+    {
+      "id": "mes01",
+      "category": "tipogrāfija",
+      "confidence": 0.95,
+      "note": "Bībeles grāmatu saīsinājumi rakstāmi ar atstarpi: „1. Moz.”, nevis „1.Moz.”. (8 vietas)",
+      "edits": [
+        {
+          "find": "(\\d)\\.([A-ZĀ-Ž][a-zā-ž]{1,12})\\.",
+          "replace": "$1. $2.",
+          "regex": true
+        }
+      ]
+    },
+    {
+      "id": "mes02",
+      "category": "tipogrāfija",
+      "confidence": 0.95,
+      "note": "„Ap. d.” rakstāms ar atstarpēm.",
+      "edits": [
+        {
+          "find": "Ap.d.",
+          "replace": "Ap. d.",
+          "all": true
+        }
+      ]
+    },
+    {
+      "id": "mes03",
+      "category": "tipogrāfija",
+      "confidence": 0.92,
+      "note": "Skaitļu intervālos lietojama domuzīme (–), nevis defise. (15 vietas)",
+      "edits": [
+        {
+          "find": "(\\d+):(\\d+)-(\\d+)",
+          "replace": "$1:$2–$3",
+          "regex": true
+        }
+      ]
+    }
+  ]
+}
