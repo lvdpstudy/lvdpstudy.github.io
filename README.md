@@ -22,13 +22,17 @@ navigation has the same shape as the English edition.
 ## Repository layout
 
 ```
-content/lv/dp/…            Markdown sources — the only files to edit by hand
+content/lv/dp/…            frozen original Markdown (tag original-1) — do not edit
+corrections/               proposals, committee decisions, glossary, frozen manifest
 tools/nav.json             navigation: parts, chapters, sections, titles, URLs
-tools/build.mjs            renders content + nav into HTML (no dependencies)
+tools/build.mjs            renders content + corrections into HTML (no dependencies)
+tools/corrections.mjs      resolves proposals, applies decisions, word/char diffs
+tools/review.mjs           builds the offline review pack for one round
+tools/apply.mjs            merges a review pack export into corrections/
 tools/extract.py           one-off .docx → Markdown converter (kept for reference)
 tools/check_fidelity.py    compares Markdown word-for-word with the Word source
 assets/css/site.css        stylesheet
-assets/js/site.js          drawer, theme, font size, bookmarks
+assets/js/site.js          drawer, theme, font size, bookmarks, text versions
 assets/fonts/              self-hosted Source Sans 3 (SIL Open Font License)
 lv/…, index.html, 404.html generated pages — do not edit by hand
 ```
@@ -51,14 +55,25 @@ and listed in the drawer).
 
 ## Editing the text
 
-1. Open the Markdown file under `content/lv/dp/`.
-2. Edit paragraphs, headings or footnotes (`[^1]` … `[^1]: text`).
-3. Rebuild and publish:
+Chapter 1 is frozen as the original (tag `original-1`, hashes in
+`corrections/FROZEN.md`). From now on `content/lv/dp/` is never edited directly.
+Corrections live in `corrections/` and are applied at build time:
 
 ```powershell
-node tools/build.mjs
+node tools/review.mjs r1-principle-of-creation   # build review/r1-….html for the committee
+node tools/apply.mjs <exported-decisions>.json  # store the returned decisions
+node tools/build.mjs                            # apply accepted edits, build diff + changelog
+```
+
+Reading pages with accepted corrections get a *Labotais / Oriģināls / Salīdzinājums*
+switch, and every accepted change appears in `/lv/izmainas/`. The full workflow is
+described in [`corrections/README.md`](corrections/README.md).
+
+Rebuild and publish as before:
+
+```powershell
 git add -A
-git commit -m "Update Chapter 1 wording"
+git commit -m "Apply review round 1"
 git push
 ```
 

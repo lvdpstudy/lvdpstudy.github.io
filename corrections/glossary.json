@@ -1,0 +1,17 @@
+{
+  "note": "Terminu saraksts, kam jāpaliek nemainīgam visā tulkojumā. Priekšlikumiem jāatbilst šīm formām.",
+  "terms": [
+    { "term": "janson", "note": "korejiešu: pozitīvais, vīrišķā sākotne; slīprakstā neizdalīt" },
+    { "term": "imson", "note": "korejiešu: negatīvais, sievišķā sākotne" },
+    { "term": "sonsan", "note": "iekšējā daba" },
+    { "term": "hjonsan", "note": "ārējā forma" },
+    { "term": "četrpozīciju pamats", "note": "nevis „četru pozīciju pamats”" },
+    { "term": "došanas un saņemšanas darbība", "note": "nevis „atdošanas”" },
+    { "term": "sākums-dalīšanās-vienotība", "note": "ar defisēm, bez atstarpēm" },
+    { "term": "atjaunošana caur izpirkumu", "note": "indemnity" },
+    { "term": "providence", "note": "nevis „providencija”" },
+    { "term": "individuālais patiesības iemiesojums", "note": "individual truth body" },
+    { "term": "Pārmaiņu grāmata", "note": "I Ching; „grāmata” ar mazo burtu" },
+    { "term": "Dievišķais Princips", "note": "grāmatas nosaukums" }
+  ]
+}

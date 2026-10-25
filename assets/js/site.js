@@ -157,4 +157,27 @@
   });
   renderBookmarks();
   syncBookmarkButton();
+
+  /* ------------------------------------------------------ text versions */
+
+  document.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-variant]");
+    if (!button) return;
+    const bar = button.closest(".variant-bar");
+    const holder = bar.parentElement;
+    const value = button.dataset.variant;
+    bar.querySelectorAll("[data-variant]").forEach((item) => {
+      const active = item === button;
+      item.classList.toggle("is-active", active);
+      item.setAttribute("aria-pressed", String(active));
+    });
+    holder.querySelectorAll("[data-variant-panel]").forEach((panel) => {
+      panel.hidden = panel.dataset.variantPanel !== value;
+    });
+  });
+
+  const initialVariant = { "#original": "original", "#diff": "diff" }[window.location.hash];
+  if (initialVariant) {
+    document.querySelector(`[data-variant="${initialVariant}"]`)?.click();
+  }
 })();

@@ -8,6 +8,9 @@
 
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
+import {
+  acceptedEdits, blocksToMarkdown, diffChars, loadDecisions, parseBlocks, resolveAll,
+} from "./corrections.mjs";
 
 const ROOT = process.cwd();
 const CONTENT = join(ROOT, "content", "lv", "dp");
@@ -209,6 +212,74 @@ const PLACEHOLDER = {
   section: "Šīs iedaļas tulkojums vēl nav publicēts.",
 };
 
+/* ---------------------------------------------------------- corrections */
+
+const correctionState = acceptedEdits(NAV);
+const correctionsBySlug = correctionState.perPage;
+
+function noteMap(blocks) {
+  const map = new Map();
+  let number = 1;
+  for (const block of blocks) {
+    const match = /^\[\^(\d+)\]:/.exec(block.text);
+    if (match) map.set(match[1], number++);
+  }
+  return map;
+}
+
+function inlineText(text, notes) {
+  let html = escapeHtml(text);
+  html = html.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+  html = html.replace(/(^|[^*])\*([^*]+)\*/g, "$1<em>$2</em>");
+  html = html.replace(/\[\^(\d+)\]/g, (whole, id) =>
+    (notes.has(id) ? `<sup class="fn"><a href="#fn-${notes.get(id)}">${notes.get(id)}</a></sup>` : whole));
+  return html;
+}
+
+function diffTokensHtml(before, after) {
+  return diffChars(before, after)
+    .map((token) => {
+      if (token.type === "eq") return escapeHtml(token.text);
+      if (token.type === "del") return `<del>${escapeHtml(token.text)}</del>`;
+      return `<ins>${escapeHtml(token.text)}</ins>`;
+    })
+    .join("");
+}
+
+function diffArticle(originalBlocks, correctedBlocks) {
+  const notes = noteMap(originalBlocks);
+  let html = "";
+  for (let index = 0; index < originalBlocks.length; index += 1) {
+    const before = originalBlocks[index];
+    const after = correctedBlocks[index];
+    if (before.kind === "blank") continue;
+    if (before.kind === "h") {
+      const hashes = /^#+/.exec(before.text)[0];
+      const level = Math.min(6, hashes.length);
+      if (level === 1) continue; // page title is rendered by the layout
+      const beforeText = before.text.replace(/^#+\s*/, "");
+      const afterText = after.text.replace(/^#+\s*/, "");
+      const body = beforeText === afterText ? inlineText(beforeText, notes) : diffTokensHtml(beforeText, afterText);
+      html += `<h${level}>${body}</h${level}>\n`;
+      continue;
+    }
+    const changed = before.text !== after.text;
+    const body = changed ? diffTokensHtml(before.text, after.text) : inlineText(before.text, notes);
+    html += `<p class="diff-p${changed ? " changed" : ""}">${body}</p>\n`;
+  }
+  return html;
+}
+
+function variantBar() {
+  return `<div class="variant-bar" role="group" aria-label="Teksta versija">
+  <span class="variant-label">Teksts</span>
+  <button class="variant-btn is-active" data-variant="current" aria-pressed="true">Labotais</button>
+  <button class="variant-btn" data-variant="original" aria-pressed="false">Oriģināls</button>
+  <button class="variant-btn" data-variant="diff" aria-pressed="false">Salīdzinājums</button>
+  <a class="variant-link" href="/lv/izmainas/">Kas mainīts?</a>
+</div>`;
+}
+
 /* --------------------------------------------------------------- drawer */
 
 function drawerNav(activeUrl) {
@@ -299,6 +370,7 @@ function footer() {
   return `<footer class="site-footer">
   <p>Oriģināls: <em>Exposition of the Divine Principle</em>. Latviešu tulkojums publicēts studiju nolūkiem.</p>
   <p>Original: <em>Exposition of the Divine Principle</em>. Latvian translation published for study purposes.</p>
+  <p><a href="/lv/izmainas/">Labojumu žurnāls</a> · <a href="/lv/">Satura rādītājs</a></p>
 </footer>
 <script src="/assets/js/site.js" defer></script>
 </body>
@@ -370,7 +442,7 @@ for (const page of pages) {
   const markdown = exists ? readFileSync(page.mdPath, "utf8") : "";
   const rendered = exists ? renderMarkdown(markdown) : { html: "", headings: [] };
   const firstHeading = rendered.headings.find((heading) => heading.level === 1);
-  const titleText = firstHeading ? firstHeading.text : page.title;
+  let titleText = firstHeading ? firstHeading.text : page.title;
 
   let article = "";
   let description = PLACEHOLDER[page.type] || PLACEHOLDER.page;
@@ -379,14 +451,36 @@ for (const page of pages) {
   const next = pages[index + 1];
 
   if (exists) {
-    description = markdown
+    const edits = correctionsBySlug.get(page.slug);
+    let markdownForText = markdown;
+
+    if (edits && edits.size) {
+      const originalBlocks = parseBlocks(markdown);
+      const correctedBlocks = originalBlocks.map((block, blockIndex) =>
+        (edits.has(blockIndex) ? { ...block, text: edits.get(blockIndex) } : block));
+      markdownForText = blocksToMarkdown(correctedBlocks);
+      const corrected = renderMarkdown(markdownForText);
+      const correctedHeading = corrected.headings.find((heading) => heading.level === 1);
+      if (correctedHeading) titleText = correctedHeading.text;
+
+      const currentHtml = corrected.html.replace(/^<h1[^>]*>.*?<\/h1>\n?/, "");
+      const originalHtml = rendered.html.replace(/^<h1[^>]*>.*?<\/h1>\n?/, "");
+      const diffHtml = diffArticle(originalBlocks, correctedBlocks);
+      article = variantBar()
+        + `<div class="variant" data-variant-panel="current">${currentHtml}</div>`
+        + `<div class="variant" data-variant-panel="original" hidden>${originalHtml}</div>`
+        + `<div class="variant" data-variant-panel="diff" hidden>${diffHtml}</div>`;
+    } else {
+      // The page title is rendered by the layout, so drop the first heading.
+      article = rendered.html.replace(/^<h1[^>]*>.*?<\/h1>\n?/, "");
+    }
+
+    description = markdownForText
       .split("\n")
       .find((line) => line.trim() && !line.startsWith("#") && !line.startsWith("[^"))
       ?.replace(/[*_`]/g, "")
       .replace(/\[\^\d+\]/g, "")
       .slice(0, 200) || description;
-    // The page title is rendered by the layout, so drop the first heading.
-    article = rendered.html.replace(/^<h1[^>]*>.*?<\/h1>\n?/, "");
     built += 1;
   } else {
     article = `<div class="placeholder"><p>${description}</p><p>Tulkojums tiek sagatavots.</p>`
@@ -435,6 +529,94 @@ ${footer()}`;
 
   writePage(page.url, body);
 }
+
+/* ------------------------------------------------------------- changelog */
+
+function diffSnippet(before, after) {
+  const tokens = diffChars(before, after);
+  const first = tokens.findIndex((token) => token.type !== "eq");
+  if (first < 0) return "";
+  const start = Math.max(0, first - 8);
+  const end = Math.min(tokens.length, first + 24);
+  const body = tokens.slice(start, end).map((token) => {
+    if (token.type === "eq") return escapeHtml(token.text);
+    if (token.type === "del") return `<del>${escapeHtml(token.text)}</del>`;
+    return `<ins>${escapeHtml(token.text)}</ins>`;
+  }).join("");
+  return `${start > 0 ? "… " : ""}${body}${end < tokens.length ? " …" : ""}`;
+}
+
+function buildChangelog() {
+  const rounds = resolveAll(NAV);
+  const decisions = new Map();
+  for (const item of loadDecisions()) {
+    for (const decision of item.data.decisions || []) decisions.set(decision.id, decision);
+  }
+  let accepted = 0;
+  let rejected = 0;
+  let pending = 0;
+  const sections = [];
+
+  for (const round of rounds) {
+    const rows = [];
+    for (const proposal of round.resolved) {
+      const decision = decisions.get(proposal.id);
+      const status = decision ? decision.status : "proposed";
+      if (status === "rejected") { rejected += 1; continue; }
+      if (status !== "accepted") { pending += 1; continue; }
+      accepted += 1;
+      const edits = proposal.edits;
+      const first = edits[0];
+      const target = pages.find((entry) => entry.slug === first.page);
+      if (!target) continue;
+      const more = edits.length > 1
+        ? `<details class="change-more"><summary>Vēl ${edits.length - 1} vietas</summary><ul>${
+          edits.slice(1).map((edit) => `<li>${diffSnippet(edit.original, edit.corrected)}</li>`).join("")
+        }</ul></details>`
+        : "";
+      rows.push(`<li class="change">
+  <p class="change-meta"><a href="${target.url}">${escapeHtml(target.title)}</a>
+    <span class="tag">${escapeHtml(proposal.category)}</span></p>
+  <p class="change-note">${escapeHtml(proposal.note)}</p>
+  <p class="change-diff">${diffSnippet(first.original, first.corrected)}</p>
+  ${more}
+</li>`);
+    }
+    if (rows.length) {
+      sections.push(`<section class="round">
+<h2>${round.round}. aplis — ${escapeHtml(round.title || round.scope)}</h2>
+<ul class="changes">
+${rows.join("\n")}
+</ul>
+</section>`);
+    }
+  }
+
+  const empty = `<p class="empty">Pagaidām neviens labojums nav publicēts — teksts ir oriģinālajā versijā.</p>`;
+  const article = `<article class="changelog">
+<h1>Labojumu žurnāls</h1>
+<p class="lead">Katrs priekšlikums tiek fiksēts atsevišķi. Publicētajā tekstā nonāk tikai tie labojumi,
+kuriem recenzenti un atbildīgais redaktors devuši piekrišanu; oriģināls vienmēr paliek pieejams.</p>
+<p class="changelog-stats"><strong>${accepted}</strong> pieņemti priekšlikumi ·
+<strong>${rejected}</strong> noraidīti · <strong>${pending}</strong> gaida lēmumu</p>
+${sections.join("\n") || empty}
+</article>`;
+
+  const html = head({
+    title: `Labojumu žurnāls — ${SITE_TITLE}`,
+    description: "Pieņemto labojumu saraksts ar pirms/ pēc salīdzinājumu.",
+    canonical: `${ORIGIN}/lv/izmainas/`,
+    activeUrl: null,
+  }) + `<main id="content"><div class="container">
+<nav class="breadcrumb" aria-label="Atrašanās vieta"><a class="home" href="/lv/" aria-label="Sākums">${icon("home", 18)}</a><span class="sep">›</span><span class="current">Labojumu žurnāls</span></nav>
+${article}
+</div></main>
+${footer()}`;
+  writePage("/lv/izmainas/", html);
+  return { accepted, rejected, pending };
+}
+
+const changelogStats = buildChangelog();
 
 /* ---------------------------------------------------------------- home */
 
