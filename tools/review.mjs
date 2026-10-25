@@ -103,8 +103,6 @@ const html = `<!DOCTYPE html>
   del{background:#fbdcd8;text-decoration:line-through}
   ins{background:#d9efdf;text-decoration:none}
   mark.focus{background:#fff3a3;padding:2px 1px;border-radius:2px;box-shadow:0 0 0 1px #f0d264}
-  mark.focus del{background:#f6c7c1}
-  mark.focus ins{background:#c6e8cd}
   .actions{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.6rem}
   .actions button{font:inherit;font-size:.85rem;padding:.4rem .8rem;border-radius:.35rem;border:1px solid var(--line);background:var(--bg);cursor:pointer}
   .actions button[aria-pressed="true"][data-set="accepted"]{background:var(--green);border-color:var(--green);color:#fff}
@@ -205,18 +203,11 @@ const diff = (a, b) => {
   const start = Math.max(0, first - 40);
   const end = Math.min(tokens.length, first + 55);
   let out = start > 0 ? "… " : "";
-  let marked = false;
   for (const token of tokens.slice(start, end)) {
-    if (token.t === "eq") {
-      if (marked) { out += "</mark>"; marked = false; }
-      out += esc(token.c);
-      continue;
-    }
-    if (!marked) { out += '<mark class="focus">'; marked = true; }
-    if (token.t === "del") out += "<del>" + esc(token.c) + "</del>";
+    if (token.t === "eq") out += esc(token.c);
+    else if (token.t === "del") out += "<del>" + esc(token.c) + "</del>";
     else out += "<ins>" + esc(token.c) + "</ins>";
   }
-  if (marked) out += "</mark>";
   if (end < tokens.length) out += " …";
   return out;
 };
