@@ -28,8 +28,26 @@ tools/build.mjs            renders content + nav into HTML (no dependencies)
 tools/extract.py           one-off .docx → Markdown converter (kept for reference)
 tools/check_fidelity.py    compares Markdown word-for-word with the Word source
 assets/css/site.css        stylesheet
+assets/js/site.js          drawer, theme, font size, bookmarks
+assets/fonts/              self-hosted Source Sans 3 (SIL Open Font License)
 lv/…, index.html, 404.html generated pages — do not edit by hand
 ```
+
+## Design
+
+The layout follows `principle.study`: a dark utility bar (text size, fullscreen,
+dark mode), a white header with the gold site title, a table-of-contents drawer
+behind the hamburger icon, and reading pages with gold chapter titles, dark
+section titles, indented paragraphs, previous/next chevrons and a bookmark rail.
+
+Typography uses Source Sans 3 at the same scale as the reference (48px page
+titles, 34px section headings, 28px body text at desktop). Gold is `#bd9f47`,
+body text `#212121`, links `#0369a1`.
+
+Not implemented yet, because they belong to later steps: the teaching toolbar
+from the reference (slides, dictionary, Red/Blue/Yellow text colouring), search
+across pages, and a bookmarks page (bookmarked pages are stored in the browser
+and listed in the drawer).
 
 ## Editing the text
 

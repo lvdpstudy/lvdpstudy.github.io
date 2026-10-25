@@ -1,4 +1,5 @@
 .work/
+.ref/
 _probe/
 *.tmp
 Thumbs.db

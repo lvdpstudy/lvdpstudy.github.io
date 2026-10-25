@@ -14,7 +14,6 @@ const CONTENT = join(ROOT, "content", "lv", "dp");
 const NAV = JSON.parse(readFileSync(join(ROOT, "tools", "nav.json"), "utf8"));
 const BASE = NAV.site.base; // "/lv/dp/"
 const SITE_TITLE = NAV.site.title;
-const TAGLINE = NAV.site.tagline;
 const ORIGIN = "https://lvdpstudy.github.io";
 
 /* ------------------------------------------------------------------ text */
@@ -41,6 +40,23 @@ function headingId(text, used) {
   used.add(candidate);
   return candidate;
 }
+
+/* ----------------------------------------------------------------- icons */
+
+const ICONS = {
+  menu: "M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z",
+  search: "M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z",
+  close: "M256-200l-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z",
+  home: "M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Z",
+  chevronLeft: "M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z",
+  chevronRight: "M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z",
+  bookmark: "M200-120v-640q0-33 23.5-56.5T280-840h400q33 0 56.5 23.5T760-760v640L480-240 200-120Zm80-122 200-86 200 86v-518H280v518Zm0-518h400-400Z",
+  expand: "M120-120v-200h80v120h120v80H120Zm520 0v-80h120v-120h80v200H640ZM120-640v-200h200v80H200v120h-80Zm640 0v-120H640v-80h200v200h-80Z",
+  moon: "M481-140q-142 0-241-99t-99-241q0-142 99-241t241-99q11 0 21 .5t20 2.5q-32 35-49.5 78.5T455-480q0 92 33.5 172T583-172q-24 16-50 24t-52 8Z",
+};
+
+const icon = (name, size = 24) =>
+  `<svg viewBox="0 -960 960 960" width="${size}" height="${size}" aria-hidden="true"><path d="${ICONS[name]}"/></svg>`;
 
 /* -------------------------------------------------------------- markdown */
 
@@ -144,7 +160,7 @@ function renderMarkdown(markdown) {
   }
 
   if (order.length) {
-    html += `<section class="notes">\n<h2 class="notes-title">Piezīmes</h2>\n<ol class="notes-list">\n`;
+    html += `<section class="notes">\n<p class="notes-title">Piezīmes</p>\n<ol class="notes-list">\n`;
     for (const source of order) {
       const number = footnoteNumbers.get(source);
       html += `<li id="fn-${number}">${inline(definitions.get(source))} `
@@ -193,7 +209,9 @@ const PLACEHOLDER = {
   section: "Šīs iedaļas tulkojums vēl nav publicēts.",
 };
 
-function sidebar(activeUrl) {
+/* --------------------------------------------------------------- drawer */
+
+function drawerNav(activeUrl) {
   const link = (page, label, extra = "") => {
     const active = page.url === activeUrl;
     const current = active ? ' aria-current="page"' : "";
@@ -202,102 +220,135 @@ function sidebar(activeUrl) {
     return `<li><a${cls} href="${page.url}"${current}>${escapeHtml(label)}</a>`;
   };
 
-  let html = '<nav class="toc" aria-label="Satura rādītājs">\n';
+  let html = '<nav class="drawer-nav" aria-label="Satura rādītājs">\n';
   for (const part of NAV.parts) {
-    if (part.title) html += `<p class="toc-part">${escapeHtml(part.title)}</p>`;
+    html += '<div class="drawer-part">\n';
+    if (part.title) html += `<p class="toc-part">${escapeHtml(part.title)}</p>\n`;
     html += '<ul class="toc-list">\n';
     for (const item of part.pages) {
       if (Array.isArray(item.sections)) {
         const chapterPage = byUrl.get(`${BASE}${item.slug}/`);
-        const expanded = chapterPage.url === activeUrl
-          || pages.some((p) => p.type === "section" && p.chapter === item && p.url === activeUrl);
-        html += link(chapterPage, item.title, "toc-chapter");
-        if (expanded) {
-          html += '\n<ul class="toc-sections">\n';
-          for (const section of item.sections) {
-            const sectionPage = byUrl.get(`${BASE}${item.slug}/${section.slug}/`);
-            html += link(sectionPage, section.title);
-            html += "</li>\n";
-          }
-          html += "</ul>\n";
-        }
+        const expanded = pages.some((p) => p.type === "section" && p.chapter === item && p.url === activeUrl);
+        html += `<li><details${expanded ? " open" : ""}><summary class="chapter-link">${escapeHtml(item.title)}</summary>\n`;
+        html += '<ul class="drawer-sub">\n';
+        html += link(chapterPage, "Nodaļas sākums");
         html += "</li>\n";
+        for (const section of item.sections) {
+          html += link(byUrl.get(`${BASE}${item.slug}/${section.slug}/`), section.title);
+          html += "</li>\n";
+        }
+        html += "</ul>\n</details></li>\n";
       } else {
         html += link(byUrl.get(`${BASE}${item.slug}/`), item.title);
         html += "</li>\n";
       }
     }
-    html += "</ul>\n";
+    html += "</ul>\n</div>\n";
   }
+  html += `<div class="drawer-bookmarks" hidden>\n<p class="toc-part">Grāmatzīmes</p>\n`
+    + `<ul class="bookmark-list"></ul>\n</div>\n`;
   html += "</nav>";
   return html;
 }
 
-function breadcrumb(page) {
-  const crumbs = [`<a href="/lv/">Sākums</a>`];
-  if (page.part && page.part.title) crumbs.push(escapeHtml(page.part.title));
-  if (page.type === "section") {
-    const chapterPage = byUrl.get(`${BASE}${page.chapter.slug}/`);
-    crumbs.push(`<a href="${chapterPage.url}">${escapeHtml(page.chapter.title)}</a>`);
-  }
-  crumbs.push(`<span>${escapeHtml(page.title)}</span>`);
-  return `<nav class="breadcrumb" aria-label="Atrašanās vieta">${crumbs.join(" <span>/</span> ")}</nav>`;
-}
+/* ----------------------------------------------------------- page shell */
 
-function pager(page) {
-  const index = pages.indexOf(page);
-  const previous = pages[index - 1];
-  const next = pages[index + 1];
-  if (!previous && !next) return "";
-  let html = '<nav class="pager" aria-label="Lapas navigācija">';
-  html += previous
-    ? `<a class="pager-prev" href="${previous.url}"><span>Iepriekšējā</span>${escapeHtml(previous.title)}</a>`
-    : "<span></span>";
-  html += next
-    ? `<a class="pager-next" href="${next.url}"><span>Nākamā</span>${escapeHtml(next.title)}</a>`
-    : "<span></span>";
-  return html + "</nav>";
-}
-
-function shell({ title, description, content, page, bodyClass = "" }) {
-  const fullTitle = page ? `${escapeHtml(title)} — ${SITE_TITLE}` : `${SITE_TITLE} — ${TAGLINE}`;
-  const desc = description ? escapeHtml(description.slice(0, 180)) : "Dievišķā Principija latviešu tulkojums.";
-  const canonical = page ? `${ORIGIN}${page.url}` : `${ORIGIN}/lv/`;
+function head({ title, description, canonical, activeUrl = null }) {
   return `<!DOCTYPE html>
 <html lang="lv">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${fullTitle}</title>
-<meta name="description" content="${desc}">
+<title>${escapeHtml(title)}</title>
+<meta name="description" content="${escapeHtml(description)}">
 <link rel="canonical" href="${canonical}">
+<link rel="preload" href="/assets/fonts/source-sans-3-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/css/site.css">
 </head>
-<body${bodyClass ? ` class="${bodyClass}"` : ""}>
+<body>
 <a class="skip" href="#content">Pāriet uz saturu</a>
+<div class="topbar">
+  <div class="topbar-inner">
+    <button class="font-btn" data-font="down" aria-label="Mazāks teksts">A−</button>
+    <button class="font-btn" data-font="up" aria-label="Lielāks teksts">A+</button>
+    <button data-action="fullscreen" aria-label="Pilnekrāns">${icon("expand", 18)}</button>
+    <button data-action="theme" aria-label="Tumšais režīms" aria-pressed="false">${icon("moon", 18)}</button>
+    <span class="lang">Latviešu</span>
+  </div>
+</div>
 <header class="site-header">
   <div class="header-inner">
+    <button class="icon-btn" data-action="menu" aria-label="Satura rādītājs" aria-expanded="false" aria-controls="drawer">${icon("menu")}</button>
     <a class="brand" href="/lv/">${SITE_TITLE}</a>
-    <span class="tagline">${TAGLINE}</span>
+    <div class="end"><button class="icon-btn" data-action="search" aria-label="Meklēt saturā">${icon("search")}</button></div>
   </div>
 </header>
-<div class="layout">
-<aside class="sidebar">
-${sidebar(page ? page.url : null)}
+<div class="overlay" data-action="close"></div>
+<aside class="drawer" id="drawer" aria-label="Satura rādītājs" aria-hidden="true">
+  <div class="drawer-head">
+    <span class="drawer-title">${SITE_TITLE}</span>
+    <button class="icon-btn" data-action="close" aria-label="Aizvērt">${icon("close")}</button>
+  </div>
+  <div class="drawer-filter"><input type="search" id="toc-filter" placeholder="Meklēt saturā…" aria-label="Meklēt saturā"></div>
+  ${drawerNav(activeUrl)}
 </aside>
-<main id="content">
-${page ? breadcrumb(page) : ""}
-${content}
-${page ? pager(page) : ""}
-</main>
-</div>
-<footer class="site-footer">
+`;
+}
+
+function footer() {
+  return `<footer class="site-footer">
   <p>Oriģināls: <em>Exposition of the Divine Principle</em>. Latviešu tulkojums publicēts studiju nolūkiem.</p>
-  <p class="footer-en">Original: <em>Exposition of the Divine Principle</em>. Latvian translation published for study purposes.</p>
+  <p>Original: <em>Exposition of the Divine Principle</em>. Latvian translation published for study purposes.</p>
 </footer>
+<script src="/assets/js/site.js" defer></script>
 </body>
 </html>
 `;
+}
+
+function breadcrumb(page) {
+  const crumbs = [`<a class="home" href="/lv/" aria-label="Sākums">${icon("home", 18)}</a>`];
+  if (page.type === "section") {
+    const chapterPage = byUrl.get(`${BASE}${page.chapter.slug}/`);
+    crumbs.push(`<a href="${chapterPage.url}">${escapeHtml(chapterPage.title)}</a>`);
+    crumbs.push(`<span class="current">${escapeHtml(page.title)}</span>`);
+  } else {
+    crumbs.push(`<span class="current">${escapeHtml(page.title)}</span>`);
+  }
+  return `<nav class="breadcrumb" aria-label="Atrašanās vieta">${crumbs.join('<span class="sep">›</span>')}</nav>`;
+}
+
+function pageHead(page, titleText) {
+  if (page.type === "chapter") {
+    const match = /^(\d+\.\s*nodaļa\.)\s*(.+)$/i.exec(titleText);
+    if (match) {
+      return `<div class="page-head"><p class="eyebrow">${escapeHtml(match[1])}</p>`
+        + `<h1 class="page-title">${escapeHtml(match[2])}</h1></div>`;
+    }
+  }
+  return `<div class="page-head"><h1 class="page-title is-dark">${escapeHtml(titleText)}</h1></div>`;
+}
+
+function sectionToc(page) {
+  const sections = pages.filter((p) => p.type === "section" && p.chapter && p.chapter.slug === page.slug);
+  if (!sections.length) return "";
+  let html = '<nav class="section-toc" aria-label="Satura rādītājs"><p class="toc-label">Satura rādītājs</p>';
+  for (const section of sections) {
+    html += `<div class="toc-section"><a class="toc-section-title" href="${section.url}">${escapeHtml(section.title)}</a>`;
+    if (existsSync(section.mdPath)) {
+      const subs = renderMarkdown(readFileSync(section.mdPath, "utf8")).headings
+        .filter((heading) => heading.level === 2);
+      if (subs.length) {
+        html += '<ul class="toc-sub">';
+        for (const sub of subs) {
+          html += `<li><a href="${section.url}#${sub.id}">${escapeHtml(sub.text)}</a></li>`;
+        }
+        html += "</ul>";
+      }
+    }
+    html += "</div>";
+  }
+  return html + "</nav>";
 }
 
 function writePage(url, html) {
@@ -318,75 +369,122 @@ for (const page of pages) {
   const exists = existsSync(page.mdPath);
   const markdown = exists ? readFileSync(page.mdPath, "utf8") : "";
   const rendered = exists ? renderMarkdown(markdown) : { html: "", headings: [] };
+  const firstHeading = rendered.headings.find((heading) => heading.level === 1);
+  const titleText = firstHeading ? firstHeading.text : page.title;
 
   let article = "";
-  let description = "";
+  let description = PLACEHOLDER[page.type] || PLACEHOLDER.page;
+  const index = pages.indexOf(page);
+  const previous = pages[index - 1];
+  const next = pages[index + 1];
 
   if (exists) {
-    const firstParagraph = rendered.headings.length
-      ? (markdown.split("\n").find((l) => l.trim() && !l.startsWith("#") && !l.startsWith("[^")) || "")
-      : "";
-    description = firstParagraph.replace(/\*\*/g, "").replace(/\[\^\d+\]/g, "").trim();
-    article = rendered.html;
-
-    const subsections = rendered.headings.filter((h) => h.level === 2);
-    if (page.type === "section" && subsections.length >= 3) {
-      let toc = '<nav class="page-toc" aria-label="Šīs iedaļas saturs"><p>Šajā iedaļā</p><ul>';
-      for (const heading of subsections) {
-        toc += `<li><a href="#${heading.id}">${escapeHtml(heading.text)}</a></li>`;
-      }
-      article = toc + "</ul></nav>\n" + article;
-    }
+    description = markdown
+      .split("\n")
+      .find((line) => line.trim() && !line.startsWith("#") && !line.startsWith("[^"))
+      ?.replace(/[*_`]/g, "")
+      .replace(/\[\^\d+\]/g, "")
+      .slice(0, 200) || description;
+    // The page title is rendered by the layout, so drop the first heading.
+    article = rendered.html.replace(/^<h1[^>]*>.*?<\/h1>\n?/, "");
     built += 1;
   } else {
+    article = `<div class="placeholder"><p>${description}</p><p>Tulkojums tiek sagatavots.</p>`
+      + `<p><a href="/lv/">Atgriezties uz saturu</a></p></div>`;
     placeholders += 1;
-    article = `<article class="placeholder">
-<h1>${escapeHtml(page.title)}</h1>
-<p>${PLACEHOLDER[page.type] || PLACEHOLDER.page}</p>
-<p class="placeholder-note">Tulkojums tiek sagatavots.</p>
-</article>`;
-    description = PLACEHOLDER[page.type] || PLACEHOLDER.page;
   }
 
-  if (page.type === "chapter" && exists) {
-    const sections = pages.filter((p) => p.type === "section" && p.chapter && p.chapter.slug === page.slug);
-    if (sections.length) {
-      let list = '<nav class="chapter-sections" aria-label="Nodaļas iedaļas"><h2>Šajā nodaļā</h2><ol>';
-      for (const section of sections) {
-        list += `<li><a href="${section.url}">${escapeHtml(section.title)}</a></li>`;
-      }
-      article += list + "</ol></nav>\n";
-    }
-  }
+  const toc = page.type === "chapter" && exists ? sectionToc(page) : "";
 
-  writePage(page.url, shell({ title: page.title, description, content: article, page }));
+  const pager = `<nav class="mobile-pager" aria-label="Lapas navigācija">${
+    previous ? `<a class="prev" href="${previous.url}"><span>Iepriekšējā</span>${escapeHtml(previous.title)}</a>` : "<span></span>"
+  }${
+    next ? `<a class="next" href="${next.url}"><span>Nākamā</span>${escapeHtml(next.title)}</a>` : "<span></span>"
+  }</nav>`;
+
+  const chevrons = `${
+    previous ? `<a class="page-chevron prev" href="${previous.url}" aria-label="Iepriekšējā: ${escapeHtml(previous.title)}">${icon("chevronLeft", 34)}</a>` : ""
+  }${
+    next ? `<a class="page-chevron next" href="${next.url}" aria-label="Nākamā: ${escapeHtml(next.title)}">${icon("chevronRight", 34)}</a>` : ""
+  }`;
+
+  const rail = `<aside class="side-rail">
+  <button class="rail-btn" data-bookmark="${page.url}" data-title="${escapeHtml(titleText)}" aria-pressed="false" aria-label="Pievienot grāmatzīmēm">${icon("bookmark", 22)}</button>
+  <button class="rail-tab" data-action="menu">Saturs</button>
+</aside>`;
+
+  const body = head({
+    title: `${titleText} — ${SITE_TITLE}`,
+    description,
+    canonical: `${ORIGIN}${page.url}`,
+    activeUrl: page.url,
+  }) + `<main id="content">
+<div class="container">
+${breadcrumb(page)}
+${pageHead(page, titleText)}
+<article>
+${article}
+</article>
+${toc}
+${pager}
+</div>
+</main>
+${chevrons}
+${rail}
+${footer()}`;
+
+  writePage(page.url, body);
 }
 
 /* ---------------------------------------------------------------- home */
 
-const homeParts = NAV.parts
-  .map((part) => {
-    let html = part.title ? `<h2>${escapeHtml(part.title)}</h2>` : "<h2>Ievads</h2>";
-    html += "<ul class=\"home-list\">";
+function homeBody() {
+  const front = NAV.parts.find((part) => !part.title);
+  let html = `<h1 class="home-title">${SITE_TITLE}</h1>`;
+
+  if (front) {
+    html += '<ul class="home-list home-front">';
+    for (const item of front.pages) {
+      const page = byUrl.get(`${BASE}${item.slug}/`);
+      const pending = existsSync(page.mdPath) ? "" : '<span class="pending">tulkojums tiek sagatavots</span>';
+      html += `<li><a href="${page.url}">${escapeHtml(item.title)}</a>${pending}</li>`;
+    }
+    html += "</ul>";
+  }
+
+  for (const part of NAV.parts) {
+    if (!part.title) continue;
+    html += `<p class="home-part">${escapeHtml(part.title)}</p><ul class="home-list">`;
     for (const item of part.pages) {
       const page = byUrl.get(`${BASE}${item.slug}/`);
-      const status = existsSync(page.mdPath) ? "" : ' <span class="pending">tulkojums tiek sagatavots</span>';
-      html += `<li><a href="${page.url}">${escapeHtml(item.title)}</a>${status}</li>`;
+      const ready = existsSync(page.mdPath);
+      if (Array.isArray(item.sections) && ready) {
+        html += `<li><details><summary>${escapeHtml(item.title)}</summary><ul class="home-sub">`;
+        for (const section of item.sections) {
+          const sectionPage = byUrl.get(`${BASE}${item.slug}/${section.slug}/`);
+          html += `<li><a href="${sectionPage.url}">${escapeHtml(section.title)}</a></li>`;
+        }
+        html += "</ul></details></li>";
+      } else {
+        html += `<li><a href="${page.url}">${escapeHtml(item.title)}</a>`;
+        if (!ready) html += '<span class="pending">tulkojums tiek sagatavots</span>';
+        html += "</li>";
+      }
     }
-    return html + "</ul>";
-  })
-  .join("\n");
+    html += "</ul>";
+  }
+  return html;
+}
 
-const home = shell({
-  title: SITE_TITLE,
-  description: "Dievišķā Principija latviešu tulkojums.",
-  content: `<article class="home">
-<h1>${SITE_TITLE}</h1>
-<p class="lead">${TAGLINE}. Šeit publicēts <em>Dievišķā Principija</em> latviešu tulkojums — pa daļām, nodaļām un iedaļām, tāpat kā oriģinālajā izdevumā.</p>
-${homeParts}
-</article>`,
-  page: null,
-});
+const home = head({
+  title: `${SITE_TITLE} — latviešu tulkojums`,
+  description: "Dievišķā Principija latviešu tulkojums — pa daļām, nodaļām un iedaļām.",
+  canonical: `${ORIGIN}/lv/`,
+  activeUrl: "/lv/",
+}) + `<main id="content"><div class="container">
+${homeBody()}
+</div></main>
+${footer()}`;
 writePage("/lv/", home);
 
 writeFileSync(join(ROOT, "index.html"), `<!DOCTYPE html>
@@ -403,15 +501,16 @@ writeFileSync(join(ROOT, "index.html"), `<!DOCTYPE html>
 </html>
 `);
 
-writeFileSync(join(ROOT, "404.html"), shell({
-  title: "Lapa nav atrasta",
+const notFound = head({
+  title: `Lapa nav atrasta — ${SITE_TITLE}`,
   description: "Lapa nav atrasta.",
-  content: `<article class="placeholder">
-<h1>Lapa nav atrasta</h1>
-<p>Šāda lapa šajā vietnē neeksistē.</p>
-<p class="placeholder-note"><a href="/lv/">Atgriezties uz sākumu</a></p>
-</article>`,
-  page: null,
-}));
+  canonical: `${ORIGIN}/404.html`,
+  activeUrl: null,
+}) + `<main id="content"><div class="container">
+<h1 class="page-title">Lapa nav atrasta</h1>
+<div class="placeholder"><p>Šāda lapa šajā vietnē neeksistē.</p><p><a href="/lv/">Atgriezties uz saturu</a></p></div>
+</div></main>
+${footer()}`;
+writeFileSync(join(ROOT, "404.html"), notFound);
 
 console.log(`pages built: ${built}, placeholders: ${placeholders}, total: ${pages.length}`);
