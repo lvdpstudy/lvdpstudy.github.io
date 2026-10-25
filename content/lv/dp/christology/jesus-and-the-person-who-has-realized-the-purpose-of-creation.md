@@ -1,0 +1,35 @@
+# 2. iedaļa. Jēzus un cilvēks, kas ir īstenojis radības mērķi
+
+## 2.1. Jēzus, pilnīgs Ādams un dzīvības koka atjaunošana
+
+Cilvēces vēsture ir atjaunošanas vēsture. Tās mērķis ir radīt Debesu valstību uz zemes, kas kļūs par realitāti vēstures noslēgumā, kad atkal tiks atgūts Ēdenes dārzā zaudētais dzīvības koks (1.Moz. 3:24; Jņ.atkl. 22:14). Ja mēs izpratīsim, kā ir saistīts dzīvības koks, kas atradās Ēdenes dārzā (1.Moz. 2:9), un dzīvības koks, kas tiks atjaunots pēdējās dienās (Jņ.atkl. 22:14), mēs noskaidrosim, kāda saikne ir starp Jēzu un pilnīgu Ādamu.
+
+Nodaļā „Grēkākrišana” (1.1.1.) mēs jau apspriedām –, ja Ādams īstenotu radības ideālu, viņš kļūtu par dzīvības koku (1.Moz. 2:9). Tad arī visi viņa pēcnācēji būtu dzīvības koki. Taču grēkākrišanas dēļ Dieva griba neīstenojās (1.Moz. 3:24), un kopš tā laika kritušie cilvēki ir lolojuši cerību būt atjaunotiem par dzīvības kokiem (Sal.pam 13:12; Jņ.atkl. 22:14). Tā kā kritušais cilvēks nevar atjaunoties un kļūt par dzīvības koku pats saviem spēkiem, kā dzīvības kokam ir jānāk cilvēkam, kas ir īstenojis radības ideālu, un „jāpiepotē” pie sevis visi kritušie cilvēki.
+
+Jēzus ir šis dzīvības koks, par kuru tiek runāts Bībelē (Jņ.atkl. 22:14). Ja Ādams būtu īstenojis pilnības ideālu, kas simboliski ir attēlots kā dzīvības koks Ēdenes dārzā, tad no radības mērķa īstenošanas viedokļa viņš neatšķirtos no Jēzus – dzīvības koka, par kuru stāsta Atklāsmes grāmata (Jņ.atkl. 22:14). Attiecīgi viņu vērtība būtu vienlīdzīga.
+
+## 2.2. Jēzus, cilvēks un radīšanas mērķa īstenošana
+
+Iepriekš mēs jau aprakstījām pilnīga cilvēka vērtību. Salīdzināsim tagad pilnīga cilvēka vērtību ar Jēzus vērtību. Lai īstenotu radības mērķi, cilvēkam ir jākļūst pilnīgam kā Dievs ir pilnīgs (Mt. 5:48) un viņam ir jāpiemīt dievišķai dabai. Tā kā Dievs ir mūžīgs, cilvēkam, kurš ir radīts, lai kļūtu par Viņa pilnīgo, substanciālo objektu, ir lemts dzīvot mūžīgi. Katrs pilnīgs cilvēks ir unikāls, jo otra tāda nav visā Visumā. Turklāt bez pilnīga cilvēka Visuma vērtība nevar tikt īstenota pilnā apmērā, jo cilvēks ir radības pasaules valdnieks. Tāpēc pilnīga cilvēka vērtība ir vienlīdzīga Visuma vērtībai.
+
+Nekas nevar būt vērtīgāks par cilvēku, kas ir īstenojis radības ideālu. Lūk, tāda ir Jēzus vērtība; un viņam noteikti bija vislielākā vērtība pasaulē. Tradicionālie kristietības uzskati par Jēzus dievišķo dabu ir pamatoti, jo Jēzus, būdams pilnīgs cilvēks, ir absolūti vienots ar Dievu. Principa nostāja par to, ka Jēzus ir cilvēks, kas ir īstenojis radības mērķi, nekādā veidā nemazina viņa vērtību. Tieši otrādi, Princips ceļ godā pilnīga cilvēka vērtību, pielīdzinot to Jēzus vērtībai.
+
+Izskatīsim tagad dažus Bībeles citātus, kas apstiprina, ka Jēzus ir radības mērķi īstenojis cilvēks. Bībelē ir rakstīts: „Jo ir viens Dievs, kā arī viens starpnieks starp Dievu un cilvēkiem – cilvēks Kristus Jēzus,” (1.Tim. 2:5); „Jo, kā ar viena cilvēka [Ādama] nepaklausību neskaitāmi kļuvuši grēcinieki, tāpat ar viena cilvēka [Jēzus] paklausību neskaitāmi kļūs taisnoti,” (Rom. 5:19); „Jo, kā caur cilvēku nāve, tā arī caur cilvēku miroņu augšāmcelšanās,” (1.Kor. 15:21); „Jo Viņš nolicis dienu, kurā Viņš pasauli taisnīgi tiesās caur kādu Vīru, ko Viņš izredzējis un par ko visiem liecību devis, uzmodinādams To no mirušiem.” (Ap.d. 17:31); „Un, kā tas bija Noas dienās, tā arī būs Cilvēka Dēla dienās.” (Lk. 17:26)
+
+Tādējādi Bībele skaidri norāda, ka Jēzus ir cilvēks. Turklāt viņam bija jāatnāk kā cilvēkam, jo tikai tad viņš varētu kļūt par Patiesu Vecāku un sniegt cilvēkiem piedzimšanu no augšienes.
+
+## 2.3. Vai Jēzus ir Pats Dievs?
+
+Kad Filips lūdza Jēzu parādīt viņam Dievu, Jēzus atbildēja: „Kas Mani ir redzējis, Tas ir redzējis Tēvu. Kā tu vari sacīt: rādi mums Tēvu? Vai tu netici, ka Es esmu Tēvā un Tēvs ir Manī?” (Jņ. 14:9-10) Bībelē par Jēzu ir teikts: „Viņš bija pasaulē, un pasaule caur Viņu radusies, bet pasaule Viņu nepazina.” (Jņ. 1:10) Savukārt Jēzus teica: „Patiesi, patiesi Es jums saku: pirms Ābrahāms tapa, esmu Es.” Šo Bībeles pantu dēļ daudzi kristieši ticēja un tic, ka Jēzus ir Dievs, Radītājs.
+
+Jēzum kā cilvēkam, kurš ir īstenojis radības mērķi un dzīvo vienotībā ar Dievu, piemīt dievišķa daba. Tāpēc šajā ziņā viņu varētu saukt par Dievu. Un tomēr viņš nav Pats Dievs. Jēzus un Dieva attiecības var salīdzināt ar ķermeņa un dvēseles attiecībām. Ķermenis ir substanciāls dvēseles objekts, kas atspoguļo dvēseli un ir vienots ar to, tāpēc ķermeni var uzskatīt par otru dvēseli; taču tas nekādā ziņā nav pati dvēsele. Analoģiski, tā kā Jēzus ir vienots ar Dievu un ir Dieva iemiesojums, viņu var saukt par otru Dievu, taču viņš nav Pats Dievs. Tā ir taisnība, ka tas, kurš ir redzējis Jēzu, ir redzējis Dievu (Jņ. 14:9, 10), taču Jēzus ar šiem vārdiem negribēja teikt, ka viņš ir Dievs.
+
+Bībelē Jēzus tiek saukts par Vārdu, kas ir kļuvis par miesu (Jņ. 1:14). Tas nozīmē, ka viņš ir Vārda iemiesojums, t.i., cilvēks, kurā Vārds ir dzīvs. Bībelē ir rakstīts, ka „caur Viņu [Vārdu] viss ir radies” (Jņ. 1:3) un visa „pasaule caur Viņu [Jēzu] radusies” (Jņ. 1:10). Tādējādi Jēzu var saukt par Radītāju.
+
+Saskaņā ar radīšanas principu visa pasaule ir pilnīga cilvēka iekšējās dabas un ārējās formas atspulgs. Pilnīgs cilvēks ir visu radības pasaules elementu iemiesojums un to harmoniskās mijiedarbības centrs. Šajā ziņā var teikt, ka pasaule tika radīta caur pilnīgu cilvēku. Turklāt Dievs iecerēja, ka cilvēks ieņems radības pasaules radītāja stāvokli, un tāpēc apveltīja viņu ar Radītāja īpašībām un spējām. Dieva iecere īstenotos, kad cilvēks, izpildot savu atbildību, sasniegtu pilnību. Ņemot vērā šo, kļūst skaidrs, ka Bībeles citāti apstiprina viedokli par Jēzu kā radības mērķi īstenojušu cilvēku; tie nenozīmē, ka Jēzus ir Pats Radītājs.
+
+Jēzus vēl teica: „Pirms Ābrahāms tapa, esmu Es.” (Jņ. 8:58) Jēzus bija Ābrahāma pēctecis. Taču no atjaunošanas providences viedokļa Jēzus ir Ābrahāma priekštecis, jo, sniedzot cilvēkiem iespēju piedzimt no augšienes, viņš ieņem cilvēces pirmvecāka stāvokli. Mums ir jāsaprot, ka šie vārdi nepavisam nenozīmē, ka Jēzus ir Pats Dievs.
+
+Kad Jēzus dzīvoja uz zemes, viņš atšķīrās no pārējiem, vienīgi ar to, ka viņam nebija pirmdzimtā grēka. To pašu var teikt par viņa dzīvi pēc augšāmcelšanās: Jēzus gars dzīvo garīgajā pasaulē un ir līdzīgs viņa mācekļu garīgajam „es”; viņš atšķiras no mācekļiem vienīgi ar to, ka, sasniedzis dievišķa gara līmeni, izstaro žilbinošu gaismu, kamēr viņa mācekļi, atrodoties dzīvības garu līmenī, atspoguļo šo gaismu.
+
+Bībelē ir teikts, ka kopš augšāmcelšanās Jēzus mūs aizstāv Dieva priekšā tāpat, kā viņš to darīja uz zemes (Rom. 8:34). Ja Jēzus ir Dievs, tad kā viņš var aizstāvēt mūs pats savā priekšā? Turklāt Jēzus vērsās pie „Dieva” vai „Tēva” ar lūgumu pēc palīdzības, kas apliecina, ka viņš nav Pats Dievs (Mt. 27:46; Jņ. 17:1). Ja Jēzus būtu Dievs, kā gan sātans varēja kārdināt Pašu Dievu un kā gan ļaunie spēki varēja Dievu sist krustā? Noslēgumā var pieminēt vārdus, ko Jēzus teica uz krusta: „Mans Dievs, Mans Dievs, kāpēc Tu esi Mani atstājis?” (Mt. 27:46), kas vēlreiz apstiprina to, ka viņš nav Pats Dievs.

@@ -1,0 +1,3 @@
+# 2. nodaļa. Mozus un Jēzus atjaunošanas providencē
+
+Bībele glabā daudzus noslēpumus, saistītus ar Dieva glābšanas providenci. Ir rakstīts: „Jo Dievs Tas Kungs neko nedara, neatklājis Savu noslēpumu praviešiem.” (Am. 3:7) Taču, nezinot Principu, kas ir Dieva providences pamatā, cilvēks nespēs saprast Bībeles vārdu apslēpto nozīmi. Vēstījums par praviešu dzīvi nav vienkārši vēsturisks pieraksts. Ar praviešu dzīvi Bībele parāda ceļu, kas ir jāiet kritušajam cilvēkam. Šajā nodaļā mēs izskatīsim to, kā Dievs ar Jēkaba un Mozus atjaunošanas ceļu parādīja paraugu Jēzus ceļam – cilvēces glābšanas ceļam.

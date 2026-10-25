@@ -1,0 +1,9 @@
+# 3. iedaļa. Atjaunošanas providences vēsture un „es”
+
+Katrs cilvēks kā indivīds ir atjaunošanas providences auglis. No tā izriet, ka katram no mums ir jāīsteno visas vēstures mērķis. Man ir jāizturas pret vēstures mērķi kā pret savu personīgo un jāuzņemas atbildība par tā īstenošanu. Lai to izdarītu, man savas dzīves laikā (horizontāli) paša spēkiem ir jāizpilda izpirkuma nosacījumi, kas ir sakrājušies visas atjaunošanas providences vertikālās vēstures gaitā.
+
+Vienīgi izpildījis šo uzdevumu, es varēšu ar lepnumu kļūt par vēstures augli, kuru Dievs ir gaidījis visas atjaunošanas providences gaitā. Citiem vārdiem sakot, savas dzīves laikā man ir jāatjauno visas nepabeigtās misijas, kuras savulaik pildīja pravieši un svētie, kas bija aicināti sasniegt atjaunošanas providences mērķi. Pretējā gadījumā es nevarēšu kļūt par cilvēku, kas ir īstenojis atjaunošanas providences mērķi. Lai kļūtu par tādu vēsturisku uzvarētāju man ir skaidri jāizprot, kāda bija Dieva sirds, kad Viņš strādāja ar praviešiem un svētajiem, sākotnējais mērķis, kāpēc Dievs viņus aicināja, un jāzina viņiem uzticēto misiju detaļas.
+
+Taču starp kritušajiem cilvēkiem nav neviena, kas paša spēkiem būtu spējīgs kļūt par tādu vēsturisku uzvarētāju. Tāpēc tas viss mums ir jāizprot caur Otrās Adventes Kungu, kura mērķis ir pabeigt atjaunošanas providenci. Turklāt, kad mēs ticam viņam un kļūstam vienoti ar viņu, mēs saņemam iespēju kopā ar viņu horizontāli izpildīt visus vertikālos atjaunošanas providences vēstures izpirkuma nosacījumus.
+
+Ceļš, kuru svētie gāja pagātnē, cenšoties īstenot atjaunošanas providences mērķi, ir ceļš, kurš ir jāiet arī mums. Turklāt mums ir jāiet tālāk par viņiem un jākļūst par pirmgājējiem tur, kur neviens no viņiem nespēra savu kāju. Tāpēc kritušie cilvēki nekad nespēs atrast ceļu, kas ved uz dzīvību, neizprotot atjaunošanas providences īpatnības. Tieši tāpēc mums ir rūpīgi visās detaļās jāizpēta atjaunošanas princips.

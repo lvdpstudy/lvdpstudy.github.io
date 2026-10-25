@@ -1,0 +1,5 @@
+# 3. nodaļa. Eshatoloģija – cilvēces vēstures noslēgums
+
+Cilvēks dzīvoja un turpina dzīvot, nezinot, kā sākās vēsture un kurp tā virzās. Atbildes uz jautājumiem par cilvēces vēstures noslēgumu tā arī nav atrastas. Daudzi kristieši burtiski skaidro Bībeles vārdus, kur ir teikts, ka pēdējās dienās „debesis ugunī sadegs un pasaules pamati karstumā izkusīs” (2.Pēt. 3:12), „saule aptumšosies, mēness nedos sava spīduma, zvaigznes kritīs no debesīm” (Mt. 24:29) un, „atskanot erceņģeļa balsij un Dieva bazūnei, pirmie celsies tie, kas ticībā uz Kristu miruši”, un tad „dzīvie, kas vēl pāri palikuši, kopā ar viņiem tiks aizrauti gaisā padebešos, pretim Tam Kungam” (1.Tes. 4:16, 17).
+
+Ir ļoti svarīgi, lai kristieši saprastu, vai tas viss notiks burtiski, vai arī šie vārdi tāpat kā daudzas citas vietas Bībelē ir simboliski. Lai to noskaidrotu, mums vispirms ir jāatbild uz fundamentāliem jautājumiem – kāpēc Dievs radīja pasauli, ko nozīmē cilvēka grēkākrišana un kāds ir glābšanas providences mērķis.

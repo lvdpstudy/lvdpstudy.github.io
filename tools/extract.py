@@ -102,26 +102,38 @@ def classify(paragraph, tokens, used_notes):
         m = re.search(r"(\d+)", style)
         level = int(m.group(1)) if m else 1
     strong = bold_ratio(tokens) == 1.0
-    if CHAPTER_RE.match(text) and (strong or style_heading):
+    if CHAPTER_RE.match(text) and len(text) < 160:
         return {"kind": "chapter", "tokens": tokens, "text": text}
-    if SECTION_RE.match(text) and (strong or style_heading):
+    if SECTION_RE.match(text) and len(text) < 160:
         return {"kind": "section", "tokens": tokens, "text": text}
+    numbered = NUM_RE.match(text)
+    if numbered and len(text) < 140:
+        depth = numbered.group(1).count(".")  # "1.1" -> 1, "2.3.1" -> 2
+        return {"kind": "num", "depth": depth, "tokens": tokens, "text": text}
     if strong:
-        m = NUM_RE.match(text)
-        if m:
-            depth = m.group(1).count(".")  # "1.1" -> 1, "2.3.1" -> 2
-            return {"kind": "num", "depth": depth, "tokens": tokens, "text": text}
         return {"kind": "bold", "tokens": tokens, "text": text}
     if style_heading:
         return {"kind": "title", "level": level, "tokens": tokens, "text": text}
     return {"kind": "para", "tokens": tokens, "text": text}
 
 
-def blocks(path: Path):
+def blocks(path: Path, extra_headings=None):
+    extras = {re.sub(r"\s+", " ", item["text"]).strip(): item for item in (extra_headings or [])}
     document = docx.Document(str(path))
     out = []
     for paragraph in document.paragraphs:
         tokens = paragraph_tokens(paragraph)
+        text = re.sub(r"\s+", " ", plain(tokens)).strip()
+        if text in extras:
+            item = extras[text]
+            label = (item.get("number") + " " if item.get("number") else "") + text
+            out.append({
+                "kind": "num",
+                "depth": int(item.get("level", 2)) - 1,
+                "tokens": [("text", label, False, False)],
+                "text": label,
+            })
+            continue
         block = classify(paragraph, tokens, None)
         if not block:
             continue
@@ -194,7 +206,7 @@ def heading_md(block) -> str:
         return "# " + clean_ws(block["text"])
     if block["kind"] == "title":
         return "#" * max(1, block.get("level", 1)) + " " + clean_ws(block["text"])
-    return "#" * (block["depth"] + 1) + " " + clean_ws(block["text"])
+    return "#" * min(4, block["depth"] + 1) + " " + clean_ws(block["text"])
 
 
 def render_page(blocks_, notes) -> str:
@@ -229,11 +241,15 @@ def main() -> int:
     parser.add_argument("--out-dir")
     parser.add_argument("--slugs", help="JSON list of section slugs in order")
     parser.add_argument("--slugs-file", help="path to a JSON file with the section slugs")
+    parser.add_argument("--extra-headings", help="JSON file with unnumbered headings to mark explicitly")
     args = parser.parse_args()
 
     path = Path(args.docx)
     notes = footnote_texts(path)
-    all_blocks = blocks(path)
+    extras = []
+    if args.extra_headings:
+        extras = json.loads(Path(args.extra_headings).read_text(encoding="utf-8-sig"))
+    all_blocks = blocks(path, extras)
 
     if args.mode == "intro":
         markdown = render_page(all_blocks, notes)

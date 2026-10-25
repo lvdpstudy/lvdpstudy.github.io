@@ -1,0 +1,3 @@
+# 7. nodaļa. Kristoloģija
+
+Kritušajai cilvēcei, kas ir ceļā uz glābšanu, ir jāatrisina vēl daudzi jautājumi, un viens no svarīgākajiem ir saistīts ar kristoloģiju. Šajā nodaļā tiek aplūkoti tādi jautājumi kā Trīsvienība, t.i., attiecības starp Dievu, Jēzu un Svēto Garu, kā arī piedzimšana no augšienes un attiecības starp Jēzu, Svēto Garu un kritušajiem cilvēkiem. Līdz pat mūsdienām neviens nevarēja izskaidrot šos jautājumus. Kamēr šie jautājumi netiks atrisināti, ticīgo domstarpības un nesaskaņas starp dažādām mācībām kristietībā turpināsies. Lai atrastu atbildes, mums ir jāizprot, ar kādu vērtību tika apveltīts cilvēks, kad viņš tika radīts. Mēs sāksim ar šī jautājuma izskatīšanu, jo tas palīdzēs mums atbildēt arī uz pārējiem jautājumiem kristoloģijā.

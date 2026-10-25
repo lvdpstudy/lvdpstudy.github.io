@@ -8,8 +8,14 @@
     {
       "title": null,
       "pages": [
-        { "slug": "preface", "title": "Priekšvārds" },
-        { "slug": "introduction", "title": "Ievads" }
+        {
+          "slug": "preface",
+          "title": "Priekšvārds"
+        },
+        {
+          "slug": "introduction",
+          "title": "Ievads"
+        }
       ]
     },
     {
@@ -45,39 +51,316 @@
             }
           ]
         },
-        { "slug": "the-human-fall", "title": "2. nodaļa. Grēkākrišana" },
-        { "slug": "eschatology", "title": "3. nodaļa. Eshatoloģija un cilvēces vēsture" },
+        {
+          "slug": "the-human-fall",
+          "title": "2. nodaļa. Grēkākrišana",
+          "sections": [
+            {
+              "slug": "the-root-of-sin",
+              "title": "1. iedaļa. Grēka sakne"
+            },
+            {
+              "slug": "the-motivation-and-process-of-the-fall",
+              "title": "2. iedaļa. Grēkākrišanas motīvi un process"
+            },
+            {
+              "slug": "the-power-of-love-the-power-of-the-principle-and-gods-commandment",
+              "title": "3. iedaļa. Mīlestības spēks, Principa spēks un Dieva bauslis"
+            },
+            {
+              "slug": "the-consequences-of-the-human-fall",
+              "title": "4. iedaļa. Cilvēka grēkākrišanas sekas"
+            },
+            {
+              "slug": "freedom-and-the-human-fall",
+              "title": "5. iedaļa. Brīvība un grēkākrišana"
+            },
+            {
+              "slug": "the-reason-god-did-not-intervene-in-the-fall-of-the-first-human-ancestors",
+              "title": "6. iedaļa. Iemesli, kāpēc Dievs neiejaucās cilvēces pirmvecāku grēkākrišanā"
+            }
+          ]
+        },
+        {
+          "slug": "eschatology",
+          "title": "3. nodaļa. Eshatoloģija – cilvēces vēstures noslēgums",
+          "sections": [
+            {
+              "slug": "the-completion-of-gods-purpose-of-creation-and-the-human-fall",
+              "title": "1. iedaļa. Dieva radīšanas mērķa īstenošana un cilvēka grēkākrišana"
+            },
+            {
+              "slug": "gods-work-of-salvation",
+              "title": "2. iedaļa. Dieva glābšanas providence"
+            },
+            {
+              "slug": "the-last-days",
+              "title": "3. iedaļa. Pēdējās dienas"
+            },
+            {
+              "slug": "the-last-days-and-the-present-days",
+              "title": "4. iedaļa. Pēdējās dienas un mūsdienas"
+            },
+            {
+              "slug": "the-last-days-the-new-truth-and-our-attitude",
+              "title": "5. iedaļa. Pēdējās dienas, jaunā patiesība un mūsu attieksme pret pēdējām dienām"
+            }
+          ]
+        },
         {
           "slug": "chart-1-the-unfolding-manifestation-of-god-s-word-in-the-creation-of-the-universe-and-the-providence-of-restoration",
           "title": "1. shēma. Dieva Vārda atklāšanās radīšanā un atjaunošanas providencē",
           "type": "chart"
         },
-        { "slug": "the-messiah", "title": "4. nodaļa. Mesija: Viņa atnākšana un Otrās atnākšanas mērķis" },
-        { "slug": "resurrection", "title": "5. nodaļa. Augšāmcelšanās" },
-        { "slug": "predestination", "title": "6. nodaļa. Predestinācija" },
-        { "slug": "christology", "title": "7. nodaļa. Kristoloģija" }
+        {
+          "slug": "the-messiah",
+          "title": "4. nodaļa. Mesija: viņa atnākšanas nozīme un mērķis",
+          "sections": [
+            {
+              "slug": "salvation-through-the-cross",
+              "title": "1. iedaļa. Glābšanas caur krustā sišanu providence"
+            },
+            {
+              "slug": "the-second-coming-of-elijah-and-john-the-baptist",
+              "title": "2. iedaļa. Ēlijas otrā advente un Jānis Kristītājs"
+            }
+          ]
+        },
+        {
+          "slug": "resurrection",
+          "title": "5. nodaļa. Augšāmcelšanās",
+          "sections": [
+            {
+              "slug": "resurrection",
+              "title": "1. iedaļa. Augšāmcelšanās"
+            },
+            {
+              "slug": "the-providence-of-resurrection",
+              "title": "2. iedaļa. Augšāmcelšanās providence"
+            },
+            {
+              "slug": "the-unification-of-religions-through-returning-resurrection",
+              "title": "3. iedaļa. Reliģiju apvienošana, pateicoties augšāmcelšanai caur atgriešanos"
+            }
+          ]
+        },
+        {
+          "slug": "predestination",
+          "title": "6. nodaļa. Predestinācija",
+          "sections": [
+            {
+              "slug": "the-predestination-of-gods-will",
+              "title": "1. iedaļa. Dieva gribas predestinācija"
+            },
+            {
+              "slug": "the-predestination-of-the-way-in-which-gods-will-is-fulfilled",
+              "title": "2. iedaļa. Dieva gribas īstenošanas predestinācija"
+            },
+            {
+              "slug": "the-predestination-of-human-beings",
+              "title": "3. iedaļa. Predestinācija attiecībā uz cilvēku"
+            },
+            {
+              "slug": "elucidation-of-biblical-verses-which-support-the-doctrine-of-absolute-predestination",
+              "title": "4. iedaļa. Skaidrojums Bībeles vārdiem, kas apstiprina predestinācijas teoriju"
+            }
+          ]
+        },
+        {
+          "slug": "christology",
+          "title": "7. nodaļa. Kristoloģija",
+          "sections": [
+            {
+              "slug": "the-value-of-a-person-who-has-realized-the-purpose-of-creation",
+              "title": "1. iedaļa. Radības mērķi īstenojuša cilvēka vērtība"
+            },
+            {
+              "slug": "jesus-and-the-person-who-has-realized-the-purpose-of-creation",
+              "title": "2. iedaļa. Jēzus un cilvēks, kas ir īstenojis radības mērķi"
+            },
+            {
+              "slug": "jesus-and-fallen-people",
+              "title": "3. iedaļa. Jēzus un kritušais cilvēks"
+            },
+            {
+              "slug": "rebirth-and-trinity",
+              "title": "4. iedaļa. Piedzimšana no augšienes un Trīsvienība"
+            }
+          ]
+        }
       ]
     },
     {
       "title": "II daļa",
       "pages": [
-        { "slug": "introduction-to-restoration", "title": "Ievads atjaunošanā" },
-        { "slug": "the-providence-to-lay-the-foundation", "title": "1. nodaļa. Pamats atjaunošanai" },
-        { "slug": "moses-and-jesus", "title": "2. nodaļa. Mozus un Jēzus atjaunošanas providencē" },
-        { "slug": "the-periods-in-providential-history", "title": "3. nodaļa. Periodi providenciālajā vēsturē un to ilguma noteikšana" },
+        {
+          "slug": "introduction-to-restoration",
+          "title": "2. daļa. Ievads",
+          "sections": [
+            {
+              "slug": "the-principle-of-restoration-through-indemnity",
+              "title": "1. iedaļa. Atjaunošanas caur izpirkumu princips"
+            },
+            {
+              "slug": "the-course-of-the-providence-of-restoration",
+              "title": "2. iedaļa. Atjaunošanas providences norise"
+            },
+            {
+              "slug": "the-history-of-the-providence-of-restoration-and-i",
+              "title": "3. iedaļa. Atjaunošanas providences vēsture un „es”"
+            }
+          ]
+        },
+        {
+          "slug": "the-providence-to-lay-the-foundation",
+          "title": "1. nodaļa. Providenciālais atjaunošanas pamata veidošanas laikmets",
+          "sections": [
+            {
+              "slug": "the-providence-of-restoration-in-adams-family",
+              "title": "1. iedaļa. Atjaunošanas providence Ādama ģimenē"
+            },
+            {
+              "slug": "the-providence-of-restoration-in-noahs-family",
+              "title": "2. iedaļa. Atjaunošanas providence Noas ģimenē"
+            },
+            {
+              "slug": "the-providence-of-restoration-in-abrahams-family",
+              "title": "3. iedaļa. Atjaunošanas providence Ābrahāma ģimenē"
+            }
+          ]
+        },
+        {
+          "slug": "moses-and-jesus",
+          "title": "2. nodaļa. Mozus un Jēzus atjaunošanas providencē",
+          "sections": [
+            {
+              "slug": "the-model-courses-for-bringing-satan-to-submission",
+              "title": "1. iedaļa. Sātana pakļaušanas paraugceļš"
+            },
+            {
+              "slug": "the-providence-of-restoration-under-the-leadership-of-moses",
+              "title": "2. iedaļa. Mozus atjaunošanas providencē"
+            },
+            {
+              "slug": "the-providence-of-restoration-under-the-leadership-of-jesus",
+              "title": "3. iedaļa. Atjaunošanas providence ar Jēzu centrā"
+            }
+          ]
+        },
+        {
+          "slug": "the-periods-in-providential-history",
+          "title": "3. nodaļa. Providenciālās vēstures periodi un to ilguma noteikšana",
+          "sections": [
+            {
+              "slug": "parallel-providential-periods",
+              "title": "1. iedaļa. Providenciālā laika identiskuma periodi"
+            },
+            {
+              "slug": "the-number-of-generations-or-years-in-the-periods-of-the-age-of-the-providence",
+              "title": "2. iedaļa. Gadu un paaudžu skaita veidošanās providenciālajā atjaunošanas pamata laikmeta periodos"
+            },
+            {
+              "slug": "the-periods-in-the-age-of-the-providence-of-restoration-and-their-lengths",
+              "title": "3. iedaļa. Periodi atjaunošanas providencē un to ilgums"
+            },
+            {
+              "slug": "the-periods-in-the-age-of-the-prolongation-of-the-providence-of-restoration-and-their-lengths",
+              "title": "4. iedaļa. Atjaunošanas providences pagarināšanas laikmeta periodi un to ilgums"
+            }
+          ]
+        },
         {
           "slug": "chart-2-parallel-providential-periods",
           "title": "2. shēma. Paralēlie providenciālie periodi",
           "type": "chart"
         },
-        { "slug": "the-parallels-between-the-two-ages", "title": "4. nodaļa. Paralēles starp diviem laikmetiem atjaunošanas providencē" },
+        {
+          "slug": "the-parallels-between-the-two-ages",
+          "title": "4. nodaļa. Atjaunošanas laikmets un atjaunošanas pagarināšanas laikmets providenciālā laika identiskuma skatījumā",
+          "sections": [
+            {
+              "slug": "the-period-of-slavery-in-egypt-and-the-period-of-persecution-in-the-roman-empire",
+              "title": "1. iedaļa. Verdzības periods Ēģiptē un vajāšanu periods Romas impērijā"
+            },
+            {
+              "slug": "section-2-the-period-of-the-judges-and-the-period-of-regional-church-leadership",
+              "title": "2. iedaļa. Soģu valdīšanas periods un kristiešu baznīcu periods patriarhu vadībā"
+            },
+            {
+              "slug": "the-period-of-the-united-kingdom-and-the-period-of-the-christian-empire",
+              "title": "3. iedaļa. Vienotās ķēniņvalsts periods un kristietības karalistes periods"
+            },
+            {
+              "slug": "the-period-of-the-divided-kingdoms-of-north-and-south-and-the-period-of-the-divided-kingdoms-of-east-and-west",
+              "title": "4. iedaļa. Sadalītās ziemeļu un dienvidu ķēniņvalsts periods un sadalītās austrumu un rietumu karalistes periods"
+            },
+            {
+              "slug": "the-period-of-israels-exile-and-return-and-the-period-of-the-papal-exile-and-return",
+              "title": "5. iedaļa. Ebreju gūsta un atgriešanās periods un pāvestu gūsta un atgriešanās periods"
+            },
+            {
+              "slug": "the-period-of-preparation-for-the-advent-of-the-messiah-and-the-period-of-preparation-for-the-second-advent-of-the-messiah",
+              "title": "6. iedaļa. Sagatavošanās periods Mesijas atnākšanai un sagatavošanās periods Mesijas Otrajai Adventei"
+            },
+            {
+              "slug": "the-providence-of-restoration-and-the-progress-of-history",
+              "title": "7. iedaļa. Vēstures attīstība atjaunošanas providences skatījumā"
+            }
+          ]
+        },
         {
           "slug": "chart-3-the-progress-of-history-as-guided-by-the-providence-of-restoration",
           "title": "3. shēma. Vēstures gaita atjaunošanas providences vadībā",
           "type": "chart"
         },
-        { "slug": "the-period-of-preparation-for-the-second-advent-of-the-messiah", "title": "5. nodaļa. Otrās atnākšanas sagatavošanas periods" },
-        { "slug": "the-second-advent", "title": "6. nodaļa. Otrā atnākšana" }
+        {
+          "slug": "the-period-of-preparation-for-the-second-advent-of-the-messiah",
+          "title": "5. nodaļa. Sagatavošanās periods Mesijas Otrajai Adventei",
+          "sections": [
+            {
+              "slug": "the-period-of-the-reformation",
+              "title": "1. iedaļa. Reformācijas periods (1517–1648)"
+            },
+            {
+              "slug": "the-period-of-religious-and-ideological-conflicts",
+              "title": "2. iedaļa. Reliģiju un ideoloģiju cīņas periods (1648–1789)"
+            },
+            {
+              "slug": "the-period-of-maturation-of-politics-economy-and-ideology",
+              "title": "3. iedaļa. Politikas, ekonomikas un ideoloģijas nobriešanas periods (1789–1918)"
+            },
+            {
+              "slug": "the-world-wars",
+              "title": "4. iedaļa. Pasaules kari"
+            }
+          ]
+        },
+        {
+          "slug": "the-second-advent",
+          "title": "6. nodaļa. Otrā Advente",
+          "sections": [
+            {
+              "slug": "when-will-christ-return",
+              "title": "1. iedaļa. Kad Kristus atgriezīsies?"
+            },
+            {
+              "slug": "in-what-manner-will-christ-return",
+              "title": "2. iedaļa. Kā atgriezīsies Kristus?"
+            },
+            {
+              "slug": "where-will-christ-return",
+              "title": "3. iedaļa. Kur atgriezīsies Kristus"
+            },
+            {
+              "slug": "parallels-between-jesus-day-and-today",
+              "title": "4. iedaļa. Jēzus laiki un mūsdienas providenciālā laika identiskuma skatījumā"
+            },
+            {
+              "slug": "the-chaotic-profusion-of-languages-and-the-necessity-for-their-unification",
+              "title": "5. iedaļa. Daudzo valodu parādīšanās iemesls un to apvienošanas nepieciešamība"
+            }
+          ]
+        }
       ]
     }
   ]

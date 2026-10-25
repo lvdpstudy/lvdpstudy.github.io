@@ -1,0 +1,3 @@
+# 5. nodaļa. Sagatavošanās periods Mesijas Otrajai Adventei
+
+Sagatavošanās periods Mesijas Otrajai Adventei ir laika periods četrsimts gadu garumā, kas sākās ar reliģisko reformāciju 1517. gadā un beidzās Pirmā pasaules kara beigās, 1918. gadā. Šī perioda kopsavilkums jau tika izklāstīts, kad mēs to salīdzinājām ar paralēlo sagatavošanās periodu Mesijas atnākšanai. Šajā nodaļā mēs to izskatīsim detalizētāk. No atjaunošanas providences viedokļa sagatavošanās periods Mesijas Otrajai Adventei iedalījās trijos posmos: reformācijas periods, reliģiskās un ideoloģiskās cīņas periods un politikas, ekonomikas un ideoloģijas brieduma periods.

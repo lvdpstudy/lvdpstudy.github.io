@@ -1,0 +1,16 @@
+# 6. nodaļa. Predestinācija
+
+Pretrunīgi teologu priekšstati par predestināciju ir izraisījuši sajukumu daudzu ticīgo dzīvēs. Vispirms mums ir jānoskaidro, kas izraisīja šīs pretrunas.
+
+Bībelē ir daudz vārdu, kurus bieži skaidro šādi: cilvēka veiksme vai neveiksme, laime vai ciešanas, glābšana vai sods, kā arī valsts uzplaukums vai kritums – viss pasaulē notiek tieši tā, kā to iepriekš noteica Dievs.
+
+Piemēram, Bībelē ir teikts: „Bet, kurus Viņš iepriekš nolēmis atpestīt, tos Viņš arī aicinājis; un, kurus Viņš aicinājis, tos Viņš arī taisnojis; bet, kurus Viņš taisnojis, tos Viņš arī pagodinājis.” (Rom. 8:30) Kā arī: „Uz Mozu Viņš saka: Es žēloju, ko Es žēloju, un būšu līdzcietīgs, pret kuru gribu. Tātad ne no cilvēka gribēšanas vai skriešanas, bet viss no Dieva žēlastības.” (Rom. 9:15, 16) „Jeb vai podniekam nav vara no tā paša māla darināt vienu trauku godam un otru negodam?” (Rom. 9:21) 
+ Bībelē ir arī rakstīts, ka Dievs mīlēja Jēkabu un ienīda Ēsavu, kad viņi vēl atradās mātes vēderā, un jau tad tika pateikts, ka „vecākais būs jaunākā kalps” (Rom. 9:12). Ir pietiekami daudz vārdu, kas apstiprina absolūtas predestinācijas teoriju. Taču mēs nedrīkstam aizmirst, ka Bībelē ir arī vārdi, kas noliedz predestinācijas teoriju. Piemēram, Dievs, cenšoties novērst grēkākrišanu, neatļāva cilvēces pirmvecākiem ēst aizliegto augli (1.Moz. 2:17). No tā izriet, ka grēkākrišanu Dievs nenoteica jau iepriekš, bet to izraisīja cilvēku nepakļaušanās Dieva bauslim. Bībelē vēl ir teikts: „Tad Dievam kļuva žēl, ka Viņš cilvēku zemes virsū bija radījis, un Viņš Savā sirdī ļoti noskuma.” (1.Moz. 6:6) Ja Dievs būtu jau iepriekš paredzējis grēkākrišanu, Viņam nebūtu nekādu iemeslu skumt par kritušajiem cilvēkiem, kas rīkotos saskaņā ar Viņa iepriekš nolemto. Turklāt Bībelē ir teikts, ka visi, kas tic Jēzum tiks glābti (Jņ. 3:16). No tā izriet, ka nevienam cilvēkam netika iepriekš nolemtas ciešanas.
+
+Uzskatu, ka cilvēka rīcības rezultāts ir atkarīgs nevis no Dieva iepriekš nolemtā, bet no paša cilvēka pūlēm, apstiprina labi zināmi vārdi no Bībeles: „Lūdziet, tad jums taps dots; meklējiet, tad jūs atradīsit; klaudziniet, tad jums taps atvērts.” (Mt. 7:7) Ja cilvēka jebkura rīcība galu galā novestu pie rezultātiem, kurus iepriekš nolēma Dievs, tad kāpēc Jēzus uzsvēra paša cilvēka pūļu nozīmi?
+
+Bībele māca mūs lūgt par slimajiem brāļiem (Jēk. 5:14), skaidri parādot, ka slimības izārstēšana ir atkarīga ne tikai no Dieva iepriekš nolemtā. Ja viss ir jau Dieva iepriekš nolemts kā neizbēgams liktenis, tad kam mums ir vajadzīgas asaru pilnās lūgšanas?
+
+Būtu loģiski pieņemt, ka, tā kā Dievs ir absolūts, arī Viņa predestinācija ir absolūta un nevar mainīties, lai kā cilvēks necenstos. Sekojoši, ja mēs pieņemam tradicionālo doktrīnu, ka Dievs ir visu absolūti iepriekš nolēmis, tad mums ir jāsecina, ka nekādas cilvēka pūles, vai tās būtu lūgšanas, sludināšana vai labdarība, nekādā veidā nevar palīdzēt īstenot Dieva atjaunošanas providenci.
+
+Kā mēs redzam, Bībelē ir daudz vārdu, kas apstiprina gan vienu, gan otru teoriju par predestināciju. Tas neizbēgami rada domstarpības šajā jautājumā. Kā šo jautājumu var atrisināt Principa skatījumā? Lai atbildētu uz to, izskatīsim predestinācijas tēmu vairākos punktos.
