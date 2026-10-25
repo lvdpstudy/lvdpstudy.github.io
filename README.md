@@ -16,7 +16,7 @@ English original is `/en/dp/<same-slug>/`.
 | Introduction | published |
 | Part I, chapters 1–7 (6 + 6 + 5 + 2 + 3 + 4 + 4 sections) | published |
 | Part II, introduction and chapters 1–6 (3 + 3 + 3 + 4 + 7 + 4 + 5 sections) | published |
-| Charts 1–3 | placeholders — pages missing from the scan set |
+| Charts 1–3 | placeholders — nested under their chapters, as on the reference site (Ch. 3, Part II Ch. 3, Part II Ch. 4) |
 
 All 13 chapter files were converted with a word-for-word fidelity check
 (`tools/check_fidelity.py`, zero differences per chapter). Five subsection
