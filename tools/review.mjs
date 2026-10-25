@@ -109,7 +109,9 @@ const html = `<!DOCTYPE html>
   .actions button{font:inherit;font-size:.85rem;padding:.4rem .8rem;border-radius:.35rem;border:1px solid var(--line);background:var(--bg);cursor:pointer}
   .actions button[aria-pressed="true"][data-set="accepted"]{background:var(--green);border-color:var(--green);color:#fff}
   .actions button[aria-pressed="true"][data-set="rejected"]{background:var(--red);border-color:var(--red);color:#fff}
-  textarea{width:100%;font:inherit;font-size:.92rem;line-height:1.5;border:1px solid var(--line);border-radius:.35rem;padding:.5rem .6rem;background:var(--bg);margin-top:.4rem;resize:vertical}
+  .editor{width:100%;min-height:8rem;font:inherit;font-size:.92rem;line-height:1.5;border:1px solid var(--line);border-radius:.35rem;padding:.5rem .6rem;background:var(--bg);margin-top:.4rem;white-space:pre-wrap}
+  .editor:focus{outline:2px solid var(--gold);outline-offset:1px}
+  .editor mark.focus{background:#fff3a3;box-shadow:0 0 0 1px #f0d264;border-radius:2px}
   details.custom{background:var(--surface);border:1px solid var(--line);border-radius:.5rem;padding:1rem 1.25rem;margin-top:2rem}
   details.custom summary{cursor:pointer;font-weight:600}
   select{font:inherit;font-size:.9rem;padding:.4rem;border:1px solid var(--line);border-radius:.35rem;max-width:100%}
@@ -219,6 +221,23 @@ const diff = (a, b) => {
   return out;
 };
 
+const focusEditor = (original, corrected) => {
+  const a = Array.from(original), b = Array.from(corrected);
+  const n = a.length, m = b.length;
+  const lcs = Array.from({length:n+1}, () => new Uint16Array(m+1));
+  for (let i=n-1;i>=0;i--) for (let j=m-1;j>=0;j--) lcs[i][j] = a[i]===b[j] ? lcs[i+1][j+1]+1 : Math.max(lcs[i+1][j], lcs[i][j+1]);
+  let i=0,j=0,start=null,end=null;
+  while (i<n && j<m) {
+    if (a[i]===b[j]) { i++; j++; continue; }
+    if (start===null) start=j;
+    if (lcs[i+1][j] >= lcs[i][j+1]) { i++; end=j; } else { j++; end=j; }
+  }
+  while (j<m) { if (start===null) start=j; j++; end=j; }
+  if (start===null) return esc(corrected);
+  if (end===null || end<=start) end = Math.min(b.length, start+1);
+  return esc(b.slice(0,start).join("")) + '<mark class="focus">' + esc(b.slice(start,end).join("")) + "</mark>" + esc(b.slice(end).join(""));
+};
+
 const cards = document.getElementById("cards");
 let currentChapter = null;
 for (const p of DATA.proposals) {
@@ -240,7 +259,7 @@ for (const p of DATA.proposals) {
       \${diff(e.original, state.replace[p.id] || e.corrected)}
     </div>\`).join("");
   const editable = p.edits.length === 1
-    ? \`<textarea data-replace="\${p.id}" rows="3">\${esc(state.replace[p.id] || p.edits[0].corrected)}</textarea>\`
+    ? \`<div class="editor" contenteditable="true" spellcheck="true" data-replace="\${p.id}">\${focusEditor(p.edits[0].original, state.replace[p.id] || p.edits[0].corrected)}</div>\`
     : "";
   card.innerHTML = \`
     <div class="meta"><span class="tag">\${esc(p.category)}</span><span class="conf">pārliecība \${Math.round(p.confidence*100)}%</span>
@@ -278,10 +297,18 @@ cards.addEventListener("click", (event) => {
 });
 
 cards.addEventListener("input", (event) => {
-  const area = event.target.closest("textarea[data-replace]");
+  const area = event.target.closest("[data-replace]");
   if (!area) return;
-  state.replace[area.dataset.replace] = area.value;
+  state.replace[area.dataset.replace] = area.innerText;
   save();
+});
+
+cards.addEventListener("paste", (event) => {
+  const area = event.target.closest("[data-replace]");
+  if (!area) return;
+  event.preventDefault();
+  const text = (event.clipboardData || window.clipboardData).getData("text");
+  document.execCommand("insertText", false, text);
 });
 
 const reviewer = document.getElementById("reviewer");
