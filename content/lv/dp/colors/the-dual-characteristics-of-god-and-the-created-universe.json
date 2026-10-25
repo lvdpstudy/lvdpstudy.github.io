@@ -7,7 +7,7 @@
   "paragraphs": 26,
   "colored": 26,
   "uncolored": 2,
-  "segments": 113
+  "segments": 111
  },
  "entries": {
   "38878e943e": {
@@ -15,11 +15,7 @@
    "segments": [
     {
      "color": "red",
-     "text": "1.1."
-    },
-    {
-     "color": "red",
-     "text": " Dieva duālās īpašības"
+     "text": "1.1. Dieva duālās īpašības"
     }
    ]
   },
@@ -434,11 +430,7 @@
    "segments": [
     {
      "color": "red",
-     "text": "1.2."
-    },
-    {
-     "color": "red",
-     "text": " Attiecības starp Dievu un Viņa radīto pasauli"
+     "text": "1.2. Attiecības starp Dievu un Viņa radīto pasauli"
     }
    ]
   },

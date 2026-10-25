@@ -166,6 +166,12 @@ def main():
 
     def parts_for(block_index):
         kind, text = blocks[block_index]
+        if kind == "h":
+            targets = target_colors(ko, en, MAPPING[block_index]) if block_index not in MANUAL_COLORS else []
+            color = next((c for c, _ in targets if c), None)
+            if color is None and block_index in MANUAL_COLORS:
+                color = MANUAL_COLORS[block_index][0]
+            return [(color, text)]
         if block_index in MANUAL_COLORS:
             sentences = split_sentences(text)
             colors = MANUAL_COLORS[block_index]
