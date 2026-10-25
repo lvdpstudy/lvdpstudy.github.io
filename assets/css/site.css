@@ -602,16 +602,28 @@ html.dark .drawer-nav summary:hover { background: rgba(255, 255, 255, .08); }
 .variant[hidden] { display: none; }
 
 article del {
-  background: #fbdcd8;
+  background: #ffc9c4;
   text-decoration: line-through;
   text-decoration-thickness: 1px;
 }
 article ins {
-  background: #d9efdf;
+  background: #b7ecc2;
   text-decoration: none;
+  padding: 0 1px;
 }
-html.dark article del { background: #5c2a25; }
-html.dark article ins { background: #21452f; }
+html.dark article del { background: #6b2a24; }
+html.dark article ins { background: #1f5a33; }
+.diff-legend {
+  font-family: var(--font);
+  font-size: .95rem;
+  color: var(--text-2);
+  margin: 0 0 1.25rem;
+}
+.diff-legend span { padding: 0 .3rem; border-radius: .2rem; }
+.diff-legend .lg-ins { background: #b7ecc2; color: #212121; }
+.diff-legend .lg-del { background: #ffc9c4; color: #212121; text-decoration: line-through; }
+html.dark .diff-legend .lg-ins { background: #1f5a33; color: #fafafa; }
+html.dark .diff-legend .lg-del { background: #6b2a24; color: #fafafa; }
 .diff-p.changed {
   border-left: 3px solid var(--gold);
   padding-left: 1rem;

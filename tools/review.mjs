@@ -86,6 +86,10 @@ const html = `<!DOCTYPE html>
   details.custom summary{cursor:pointer;font-weight:600}
   select{font:inherit;font-size:.9rem;padding:.4rem;border:1px solid var(--line);border-radius:.35rem;max-width:100%}
   .muted{color:var(--muted);font-size:.85rem}
+  .ver{font-size:.68rem;color:var(--muted);border:1px solid var(--line);border-radius:99px;padding:.05rem .45rem;vertical-align:middle;font-weight:400}
+  .status{font-size:.8rem;color:var(--gold);max-width:26rem}
+  details.json{background:var(--surface);border:1px solid var(--line);border-radius:.5rem;padding:1rem 1.25rem;margin-top:1.5rem}
+  #json-text{width:100%;font:12px/1.45 ui-monospace,Consolas,monospace;border:1px solid var(--line);border-radius:.35rem;padding:.5rem;background:var(--bg);color:var(--text)}
   footer{position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--line);padding:.7rem 1.25rem;display:flex;gap:1rem;align-items:center;font-size:.85rem}
   footer .spacer{flex:1}
   footer button{font:inherit;padding:.45rem .9rem;border-radius:.4rem;border:1px solid var(--line);background:var(--bg);cursor:pointer}
@@ -93,8 +97,9 @@ const html = `<!DOCTYPE html>
 </style>
 </head>
 <body>
+<div id="fatal" hidden style="background:#fbdcd8;color:#7a1c14;padding:.75rem 1.25rem;font:600 15px system-ui"></div>
 <header>
-  <h1>Labojumu recenzija — ${pack.title}</h1>
+  <h1>Labojumu recenzija — ${pack.title} <span class="ver">v4</span></h1>
   <span class="spacer"></span>
   <label>Recenzents <input id="reviewer" placeholder="Vārds, uzvārds"></label>
 </header>
@@ -106,7 +111,14 @@ const html = `<!DOCTYPE html>
       Nekas netiek publicēts bez apstiprināšanas.</p>
     <p class="stats" id="stats"></p>
   </section>
+  <noscript><p style="background:#fbdcd8;color:#7a1c14;padding:.75rem 1rem;border-radius:.4rem">Šim failam jābūt atvērtam pārlūkā ar ieslēgtu JavaScript. Ja priekšlikumi nav redzami, atveriet failu citā pārlūkā.</p></noscript>
   <section id="cards"></section>
+  <details class="json" id="json-box" hidden>
+    <summary>Rezultāts kā teksts (ja lejupielāde neizdodas)</summary>
+    <p class="muted">Nokopējiet visu tekstu un nosūtiet to atpakaļ pa e-pastu vai ziņu.</p>
+    <textarea id="json-text" rows="10" readonly></textarea>
+    <p><button id="copy-json">Kopēt tekstu</button> <span class="muted" id="copy-status"></span></p>
+  </details>
   <details class="custom">
     <summary>Pievienot savu labojumu</summary>
     <p class="muted">Izvēlieties lappusi un rindkopu, izlabojiet tekstu un pievienojiet. Šie labojumi tiks nodoti atsevišķi un vēl nav iekļauti priekšlikumos.</p>
@@ -118,19 +130,32 @@ const html = `<!DOCTYPE html>
 </main>
 <footer>
   <span id="counts" class="muted"></span>
+  <span id="export-status" class="status"></span>
   <span class="spacer"></span>
   <button id="reset">Notīrīt</button>
   <button class="primary" id="export">Eksportēt lēmumus</button>
 </footer>
 <script>
+window.addEventListener("error", function (event) {
+  var box = document.getElementById("fatal");
+  if (!box) return;
+  box.hidden = false;
+  box.textContent = "Radās kļūda: " + event.message;
+});
 const DATA = ${JSON.stringify(pack)};
 const KEY = "lvdp-review-r" + DATA.round;
-const state = JSON.parse(localStorage.getItem(KEY) || "{}");
+const store = {
+  get(key) { try { return localStorage.getItem(key); } catch (error) { return null; } },
+  set(key, value) { try { localStorage.setItem(key, value); } catch (error) { /* storage blocked */ } },
+  remove(key) { try { localStorage.removeItem(key); } catch (error) { /* storage blocked */ } },
+};
+let state = {};
+try { state = JSON.parse(store.get(KEY) || "{}") || {}; } catch (error) { state = {}; }
 state.decisions = state.decisions || {};
 state.replace = state.replace || {};
 state.custom = state.custom || [];
 state.reviewer = state.reviewer || "";
-const save = () => localStorage.setItem(KEY, JSON.stringify(state));
+const save = () => store.set(KEY, JSON.stringify(state));
 
 const esc = (s) => s.replace(/[&<>]/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
 const diff = (a, b) => {
@@ -262,28 +287,76 @@ document.getElementById("custom-add").addEventListener("click", () => {
 
 document.getElementById("reset").addEventListener("click", () => {
   if (!confirm("Notīrīt visus lēmumus?")) return;
-  localStorage.removeItem(KEY);
+  store.remove(KEY);
   location.reload();
 });
 
 document.getElementById("export").addEventListener("click", () => {
-  const payload = {
-    round: DATA.round,
-    scope: DATA.scope,
-    reviewer: state.reviewer || "nezināms",
-    submitted: new Date().toISOString().slice(0, 10),
-    decisions: DATA.proposals
-      .map((p) => ({ id: p.id, status: state.decisions[p.id] || "pending", replace: state.replace[p.id] }))
-      .filter((d) => d.status !== "pending"),
-    custom: state.custom,
-  };
-  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = \`lvdp-r\${DATA.round}-\${(state.reviewer || "recenzents").toLowerCase().replace(/[^a-z0-9]+/g, "-")}.json\`;
-  link.click();
-  URL.revokeObjectURL(url);
+  const status = document.getElementById("export-status");
+  try {
+    const payload = {
+      round: DATA.round,
+      scope: DATA.scope,
+      reviewer: state.reviewer || "nezināms",
+      submitted: new Date().toISOString().slice(0, 10),
+      decisions: DATA.proposals
+        .map((p) => ({ id: p.id, status: state.decisions[p.id] || "pending", replace: state.replace[p.id] }))
+        .filter((d) => d.status !== "pending"),
+      custom: state.custom,
+    };
+    const text = JSON.stringify(payload, null, 2);
+
+    if (!payload.decisions.length && !payload.custom.length) {
+      if (status) status.textContent = "Nav atzīmēts neviens priekšlikums — vispirms izvēlieties Pieņemt vai Noraidīt.";
+      return;
+    }
+
+    const box = document.getElementById("json-box");
+    const area = document.getElementById("json-text");
+    if (box && area) {
+      area.value = text;
+      box.hidden = false;
+      box.open = true;
+    }
+
+    let downloaded = false;
+    try {
+      const blob = new Blob([text], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = \`lvdp-r\${DATA.round}-\${(state.reviewer || "recenzents").toLowerCase().replace(/[^a-z0-9]+/g, "-")}.json\`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+      downloaded = true;
+    } catch (error) {
+      downloaded = false;
+    }
+
+    if (status) {
+      status.textContent = downloaded
+        ? "Fails sagatavots — ja tas neparādījās lejupielādēs, nokopējiet tekstu zemāk."
+        : "Lejupielāde neizdevās — nokopējiet tekstu zemāk.";
+    }
+    if (box) box.scrollIntoView({ behavior: "smooth", block: "start" });
+  } catch (error) {
+    if (status) status.textContent = "Kļūda: " + error.message;
+  }
+});
+
+document.getElementById("copy-json").addEventListener("click", async () => {
+  const area = document.getElementById("json-text");
+  const status = document.getElementById("copy-status");
+  try {
+    await navigator.clipboard.writeText(area.value);
+    status.textContent = "Nokopēts.";
+  } catch (error) {
+    area.focus();
+    area.select();
+    status.textContent = "Nospiediet Ctrl+C, lai nokopētu.";
+  }
 });
 </script>
 </body>

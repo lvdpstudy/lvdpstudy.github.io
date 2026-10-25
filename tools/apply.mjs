@@ -1,18 +1,23 @@
 /**
- * Merge a review pack export into the corrections folder.
+ * Merge a review pack export into the corrections folder, or undo it.
  *
- *   node tools/apply.mjs review/lvdp-r1-anna.json
+ *   node tools/apply.mjs <decisions.json>          store the committee's decisions
+ *   node tools/apply.mjs --undo <decisions.json>   remove those decisions again
  *
  * The decisions file is stored as corrections/rounds/r<round>-decisions-<reviewer>.json.
- * Nothing is applied to the text here; the site build reads accepted decisions.
+ * Nothing is applied to the text here; the site build reads accepted decisions, so
+ * undoing is always possible without touching the original.
  */
 
-import { readFileSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync, unlinkSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
-const [input] = process.argv.slice(2);
+const args = process.argv.slice(2);
+const undo = args[0] === "--undo";
+const input = undo ? args[1] : args[0];
+
 if (!input) {
-  console.error("usage: node tools/apply.mjs <decisions.json>");
+  console.error("usage: node tools/apply.mjs [--undo] <decisions.json>");
   process.exit(1);
 }
 
@@ -28,8 +33,27 @@ const slug = (payload.reviewer || "recenzents")
   .replace(/[^a-z0-9]+/g, "-")
   .replace(/^-+|-+$/g, "") || "recenzents";
 
-const out = join("corrections", "rounds", `r${payload.round}-decisions-${slug}.json`);
-writeFileSync(out, JSON.stringify({
+const decisionsPath = join("corrections", "rounds", `r${payload.round}-decisions-${slug}.json`);
+const customPath = join("corrections", "rounds", `r${payload.round}-custom-${slug}.json`);
+
+if (undo) {
+  let removed = 0;
+  for (const path of [decisionsPath, customPath]) {
+    if (existsSync(path)) {
+      unlinkSync(path);
+      console.log(`removed ${path}`);
+      removed += 1;
+    }
+  }
+  if (!removed) {
+    console.log("nothing to undo for this reviewer and round");
+  } else {
+    console.log("run `node tools/build.mjs` to rebuild without these decisions");
+  }
+  process.exit(0);
+}
+
+writeFileSync(decisionsPath, JSON.stringify({
   round: payload.round,
   scope: payload.scope,
   reviewer: payload.reviewer,
@@ -39,11 +63,10 @@ writeFileSync(out, JSON.stringify({
 
 const accepted = payload.decisions.filter((decision) => decision.status === "accepted").length;
 const rejected = payload.decisions.filter((decision) => decision.status === "rejected").length;
-console.log(`saved ${out}`);
+console.log(`saved ${decisionsPath}`);
 console.log(`accepted ${accepted}, rejected ${rejected}, pending ${payload.decisions.length - accepted - rejected}`);
 
 if (Array.isArray(payload.custom) && payload.custom.length) {
-  const customPath = join("corrections", "rounds", `r${payload.round}-custom-${slug}.json`);
   writeFileSync(customPath, JSON.stringify({ round: payload.round, reviewer: payload.reviewer, entries: payload.custom }, null, 2) + "\n", "utf8");
   console.log(`custom suggestions kept for review: ${customPath} (${payload.custom.length})`);
 }

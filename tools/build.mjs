@@ -216,6 +216,12 @@ const PLACEHOLDER = {
 
 const correctionState = acceptedEdits(NAV);
 const correctionsBySlug = correctionState.perPage;
+if (correctionState.conflicts.length) {
+  console.warn("Reviewer conflicts (later file wins):");
+  for (const conflict of correctionState.conflicts) {
+    console.warn(`  ${conflict.id}: ${conflict.previous} vs ${conflict.next} (${conflict.file})`);
+  }
+}
 
 function noteMap(blocks) {
   const map = new Map();
@@ -465,7 +471,8 @@ for (const page of pages) {
 
       const currentHtml = corrected.html.replace(/^<h1[^>]*>.*?<\/h1>\n?/, "");
       const originalHtml = rendered.html.replace(/^<h1[^>]*>.*?<\/h1>\n?/, "");
-      const diffHtml = diffArticle(originalBlocks, correctedBlocks);
+      const diffHtml = `<p class="diff-legend">Salīdzinājums: <span class="lg-ins">zaļš — labotais</span> ·
+        <span class="lg-del">svītrots — oriģinālais</span></p>` + diffArticle(originalBlocks, correctedBlocks);
       article = variantBar()
         + `<div class="variant" data-variant-panel="current">${currentHtml}</div>`
         + `<div class="variant" data-variant-panel="original" hidden>${originalHtml}</div>`

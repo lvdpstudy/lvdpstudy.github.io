@@ -147,8 +147,13 @@ export function acceptedEdits(nav, root = CORRECTIONS) {
   const decisions = loadDecisions(root);
   const status = new Map();
   const overrides = new Map();
+  const conflicts = [];
   for (const item of decisions) {
     for (const decision of item.data.decisions || []) {
+      const previous = status.get(decision.id);
+      if (previous && previous !== decision.status) {
+        conflicts.push({ id: decision.id, previous, next: decision.status, file: item.name });
+      }
       status.set(decision.id, decision.status);
       if (decision.replace) overrides.set(decision.id, decision.replace);
     }
@@ -176,7 +181,11 @@ export function acceptedEdits(nav, root = CORRECTIONS) {
       }
     }
   }
-  return { perPage, stats: { proposed, accepted, rejected, pending: proposed - accepted - rejected } };
+  return {
+    perPage,
+    stats: { proposed, accepted, rejected, pending: proposed - accepted - rejected },
+    conflicts,
+  };
 }
 
 export function applyToPage(page, edits) {
