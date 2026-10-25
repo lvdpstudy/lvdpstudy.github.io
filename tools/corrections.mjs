@@ -96,6 +96,9 @@ function locate(pages, find, replace, all) {
         original: block.text,
         corrected,
         occurrences: count,
+        find,
+        replace,
+        all,
       });
     });
   }
@@ -159,10 +162,13 @@ export function acceptedEdits(nav, root = CORRECTIONS) {
     }
   }
   const perPage = new Map();
+  const pagesByScope = new Map();
   let accepted = 0;
   let rejected = 0;
   let proposed = 0;
   for (const round of rounds) {
+    if (!pagesByScope.has(round.scope)) pagesByScope.set(round.scope, loadPages(round.scope, nav));
+    const pages = pagesByScope.get(round.scope);
     for (const proposal of round.resolved) {
       proposed += 1;
       const state = status.get(proposal.id) || "proposed";
@@ -173,11 +179,26 @@ export function acceptedEdits(nav, root = CORRECTIONS) {
       if (state !== "accepted") continue;
       accepted += 1;
       for (const edit of proposal.edits) {
-        const text = overrides.get(proposal.id) && proposal.edits.length === 1
-          ? overrides.get(proposal.id)
-          : edit.corrected;
+        const page = pages.find((entry) => entry.slug === edit.page);
+        if (!page) {
+          conflicts.push({ id: proposal.id, previous: "missing page", next: edit.page, file: round.file });
+          continue;
+        }
         if (!perPage.has(edit.page)) perPage.set(edit.page, new Map());
-        perPage.get(edit.page).set(edit.blockIndex, text);
+        const map = perPage.get(edit.page);
+        const current = map.has(edit.blockIndex) ? map.get(edit.blockIndex) : page.blocks[edit.blockIndex].text;
+        let next;
+        if (overrides.has(proposal.id) && proposal.edits.length === 1) {
+          next = overrides.get(proposal.id);
+        } else if (edit.all) {
+          next = current.split(edit.find).join(edit.replace);
+        } else if (current.includes(edit.find)) {
+          next = current.replace(edit.find, edit.replace);
+        } else {
+          next = current;
+          conflicts.push({ id: proposal.id, previous: "find gone", next: edit.find.slice(0, 40), file: round.file });
+        }
+        map.set(edit.blockIndex, next);
       }
     }
   }

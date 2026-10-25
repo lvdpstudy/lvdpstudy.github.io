@@ -1,0 +1,313 @@
+{
+  "round": 2,
+  "scope": "the-human-fall",
+  "title": "2. nodaļa. Grēkākrišana",
+  "created": "2026-10-25",
+  "author": "ai",
+  "note": "Pirmais priekšlikumu aplis 2. nodaļai. Ietver mehāniskas tipogrāfijas korekcijas visā nodaļā un valodas labojumus pirmajās divās iedaļās; pārējās iedaļas tiks pievienotas nākamajā aplī.",
+  "proposals": [
+    {
+      "id": "h01",
+      "category": "tipogrāfija",
+      "confidence": 0.95,
+      "note": "Trūkst atstarpes starp grāmatas saīsinājumu un nodaļu.",
+      "edits": [
+        {
+          "find": "1.Moz.1:26",
+          "replace": "1. Moz. 1:26"
+        }
+      ]
+    },
+    {
+      "id": "h02",
+      "category": "pareizrakstība",
+      "confidence": 0.99,
+      "note": "Drukas kļūda: „būdu” → „būtu”.",
+      "edits": [
+        {
+          "find": "būdu radījis",
+          "replace": "būtu radījis"
+        }
+      ]
+    },
+    {
+      "id": "h03",
+      "category": "pareizrakstība",
+      "confidence": 0.98,
+      "note": "Svētku nosaukums ir „Vasarsvētki”.",
+      "edits": [
+        {
+          "find": "Vasarassvētku",
+          "replace": "Vasarsvētku"
+        }
+      ]
+    },
+    {
+      "id": "h04",
+      "category": "gramatika",
+      "confidence": 0.98,
+      "note": "Nākotnes 2. personas daudzskaitļa forma ir „izbēgsiet”.",
+      "edits": [
+        {
+          "find": "izbēgsit",
+          "replace": "izbēgsiet"
+        }
+      ]
+    },
+    {
+      "id": "h05",
+      "category": "gramatika",
+      "confidence": 0.95,
+      "note": "„Laist pasaulē” prasa akuzatīvu: „labos bērnus”.",
+      "edits": [
+        {
+          "find": "jālaiž pasaulē labā bērni",
+          "replace": "jālaiž pasaulē labos bērnus"
+        }
+      ]
+    },
+    {
+      "id": "h06",
+      "category": "gramatika",
+      "confidence": 0.92,
+      "note": "„Jāiepazīst” prasa akuzatīvu: „eņģeļus”.",
+      "edits": [
+        {
+          "find": "jāiepazīst eņģelis",
+          "replace": "jāiepazīst eņģeļus"
+        }
+      ]
+    },
+    {
+      "id": "h07",
+      "category": "stils",
+      "confidence": 0.7,
+      "note": "Konstrukcija „tas ir acīmredzami, ka” ir neveikla; dabiski „ir acīmredzami, ka”.",
+      "edits": [
+        {
+          "find": "Tas ir acīmredzami, ka šī „vecā čūska”",
+          "replace": "Ir acīmredzami, ka šī „vecā čūska”"
+        }
+      ]
+    },
+    {
+      "id": "h08",
+      "category": "stils",
+      "confidence": 0.7,
+      "note": "Tā pati konstrukcija kā iepriekš.",
+      "edits": [
+        {
+          "find": "Tas ir acīmredzami, ka viņi kaunējās",
+          "replace": "Ir acīmredzami, ka viņi kaunējās"
+        }
+      ]
+    },
+    {
+      "id": "h09",
+      "category": "pieturzīmes",
+      "confidence": 0.9,
+      "note": "Komats pēc „kā” šeit nav vajadzīgs.",
+      "edits": [
+        {
+          "find": "Un tā kā, pirms viņa tika nomesta",
+          "replace": "Un tā kā pirms viņa tika nomesta"
+        }
+      ]
+    },
+    {
+      "id": "h10",
+      "category": "pieturzīmes",
+      "confidence": 0.92,
+      "note": "Palīgteikums „ko mēs ēdam” jānoslēdz ar komatu.",
+      "edits": [
+        {
+          "find": "Kā tad tas, ko mēs ēdam varēja",
+          "replace": "Kā tad tas, ko mēs ēdam, varēja"
+        }
+      ]
+    },
+    {
+      "id": "h11",
+      "category": "pieturzīmes",
+      "confidence": 0.9,
+      "note": "Komats pēc „gadījumā” nav vajadzīgs.",
+      "edits": [
+        {
+          "find": "Bet tādā gadījumā, mums var rasties",
+          "replace": "Bet tādā gadījumā mums var rasties"
+        }
+      ]
+    },
+    {
+      "id": "h12",
+      "category": "pieturzīmes",
+      "confidence": 0.9,
+      "note": "Komats pieder aiz noslēdzošās pēdiņas, nevis iekšpusē.",
+      "edits": [
+        {
+          "find": "sodam,” (",
+          "replace": "sodam” ("
+        }
+      ]
+    },
+    {
+      "id": "h13",
+      "category": "pieturzīmes",
+      "confidence": 0.9,
+      "note": "Komats pirms iekavām nav vajadzīgs.",
+      "edits": [
+        {
+          "find": "„pēdējam Ādamam”, (",
+          "replace": "„pēdējam Ādamam” ("
+        }
+      ]
+    },
+    {
+      "id": "h14",
+      "category": "saskaņa",
+      "confidence": 0.8,
+      "note": "Citā vietā lietots „Neprincipiālās”; jāsaglabā noteiktā galotne.",
+      "edits": [
+        {
+          "find": "Neprincipiālas mīlestības",
+          "replace": "Neprincipiālās mīlestības"
+        }
+      ]
+    },
+    {
+      "id": "h15",
+      "category": "gramatika",
+      "confidence": 0.85,
+      "note": "Tagadnes nozīmē jālieto „dzimst … turpina”.",
+      "edits": [
+        {
+          "find": "līdz pat šai dienai dzima grēkā un turpināja",
+          "replace": "līdz pat šai dienai dzimst grēkā un turpina"
+        }
+      ]
+    },
+    {
+      "id": "h16",
+      "category": "leksika",
+      "confidence": 0.55,
+      "note": "Iespējams, domāts „kāda vārdā” (kālab). Jāapstiprina komitejai.",
+      "edits": [
+        {
+          "find": "Kā vārdā cilvēks būtu riskējis",
+          "replace": "Kāda vārdā cilvēks būtu riskējis"
+        }
+      ]
+    },
+    {
+      "id": "h17",
+      "category": "tipogrāfija",
+      "confidence": 0.92,
+      "note": "Skaitļu intervālos lietojama domuzīme (–), nevis defise.",
+      "edits": [
+        {
+          "find": "20:1-3",
+          "replace": "20:1–3"
+        },
+        {
+          "find": "12:7-10",
+          "replace": "12:7–10"
+        },
+        {
+          "find": "20:1-15",
+          "replace": "20:1–15"
+        }
+      ]
+    },
+    {
+      "id": "h18",
+      "category": "tipogrāfija",
+      "confidence": 0.95,
+      "note": "Atstarpe starp grāmatas saīsinājumu un nodaļu (21 vieta).",
+      "edits": [
+        {
+          "find": "1.Moz.",
+          "replace": "1. Moz.",
+          "all": true
+        }
+      ]
+    },
+    {
+      "id": "h19",
+      "category": "tipogrāfija",
+      "confidence": 0.95,
+      "note": "Tas pats 1. Korintiešiem (3 vietas).",
+      "edits": [
+        {
+          "find": "1.Kor.",
+          "replace": "1. Kor.",
+          "all": true
+        }
+      ]
+    },
+    {
+      "id": "h20",
+      "category": "tipogrāfija",
+      "confidence": 0.95,
+      "note": "„Jņ. atkl.” ar atstarpi (5 vietas).",
+      "edits": [
+        {
+          "find": "Jņ.atkl.",
+          "replace": "Jņ. atkl.",
+          "all": true
+        }
+      ]
+    },
+    {
+      "id": "h21",
+      "category": "tipogrāfija",
+      "confidence": 0.95,
+      "note": "„Ap. d.” ar atstarpēm (2 vietas).",
+      "edits": [
+        {
+          "find": "Ap.d.",
+          "replace": "Ap. d.",
+          "all": true
+        }
+      ]
+    },
+    {
+      "id": "h22",
+      "category": "tipogrāfija",
+      "confidence": 0.95,
+      "note": "„2. Pēt.” ar atstarpēm.",
+      "edits": [
+        {
+          "find": "2.Pēt.",
+          "replace": "2. Pēt.",
+          "all": true
+        }
+      ]
+    },
+    {
+      "id": "h23",
+      "category": "tipogrāfija",
+      "confidence": 0.95,
+      "note": "„Sal. pam.” ar atstarpēm (2 vietas).",
+      "edits": [
+        {
+          "find": "Sal.pam.",
+          "replace": "Sal. pam.",
+          "all": true
+        }
+      ]
+    },
+    {
+      "id": "h24",
+      "category": "pareizrakstība",
+      "confidence": 0.97,
+      "note": "Pareizi „erceņģelis”, nevis „ercenģelis”.",
+      "edits": [
+        {
+          "find": "ercenģeļ",
+          "replace": "erceņģeļ",
+          "all": true
+        }
+      ]
+    }
+  ]
+}
