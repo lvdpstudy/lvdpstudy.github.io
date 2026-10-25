@@ -9,7 +9,7 @@
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import {
-  acceptedEdits, blocksToMarkdown, diffChars, hashText, loadDecisions, parseBlocks, resolveAll,
+  acceptedEdits, blocksToMarkdown, diffChars, loadDecisions, parseBlocks, resolveAll,
 } from "./corrections.mjs";
 
 const ROOT = process.cwd();
@@ -63,7 +63,7 @@ const icon = (name, size = 24) =>
 
 /* -------------------------------------------------------------- markdown */
 
-function renderMarkdown(markdown, colors = null) {
+function renderMarkdown(markdown) {
   const lines = markdown.replace(/\r\n/g, "\n").split("\n");
   const definitions = new Map();
   for (const line of lines) {
@@ -154,22 +154,11 @@ function renderMarkdown(markdown, colors = null) {
   };
 
   let html = "";
-  const colored = (text) => {
-    if (!colors) return null;
-    const entry = colors.get(hashText(text));
-    if (!entry) return null;
-    return entry.segments
-      .map((segment) => (segment.color
-        ? `<span class="dp-${segment.color}">${inline(segment.text)}</span>`
-        : inline(segment.text)))
-      .join("");
-  };
   for (const block of blocks) {
-    const painted = colored(block.text);
     if (block.type === "h") {
-      html += `<h${block.level} id="${block.id}">${painted ?? inline(block.text)}</h${block.level}>\n`;
+      html += `<h${block.level} id="${block.id}">${inline(block.text)}</h${block.level}>\n`;
     } else {
-      html += `<p>${painted ?? inline(block.text)}</p>\n`;
+      html += `<p>${inline(block.text)}</p>\n`;
     }
   }
 
@@ -227,13 +216,6 @@ const PLACEHOLDER = {
 
 const correctionState = acceptedEdits(NAV);
 const correctionsBySlug = correctionState.perPage;
-
-function loadColorMap(slug) {
-  const path = join(ROOT, "content", "lv", "dp", "colors", `${slug}.json`);
-  if (!existsSync(path)) return null;
-  const data = JSON.parse(readFileSync(path, "utf8"));
-  return new Map(Object.entries(data.entries));
-}
 if (correctionState.conflicts.length) {
   console.warn("Reviewer conflicts (later file wins):");
   for (const conflict of correctionState.conflicts) {
@@ -294,7 +276,8 @@ function diffArticle(originalBlocks, correctedBlocks) {
   return html;
 }
 
-function variantBar() {  return `<div class="variant-bar" role="group" aria-label="Teksta versija">
+function variantBar() {
+  return `<div class="variant-bar" role="group" aria-label="Teksta versija">
   <span class="variant-label">Teksts</span>
   <button class="variant-btn is-active" data-variant="current" aria-pressed="true">Labotais</button>
   <button class="variant-btn" data-variant="original" aria-pressed="false">Oriģināls</button>
@@ -463,8 +446,7 @@ let placeholders = 0;
 for (const page of pages) {
   const exists = existsSync(page.mdPath);
   const markdown = exists ? readFileSync(page.mdPath, "utf8") : "";
-  const colorMap = loadColorMap(page.slug);
-  const rendered = exists ? renderMarkdown(markdown, colorMap) : { html: "", headings: [] };
+  const rendered = exists ? renderMarkdown(markdown) : { html: "", headings: [] };
   const firstHeading = rendered.headings.find((heading) => heading.level === 1);
   let titleText = firstHeading ? firstHeading.text : page.title;
 
@@ -483,7 +465,7 @@ for (const page of pages) {
       const correctedBlocks = originalBlocks.map((block, blockIndex) =>
         (edits.has(blockIndex) ? { ...block, text: edits.get(blockIndex) } : block));
       markdownForText = blocksToMarkdown(correctedBlocks);
-      const corrected = renderMarkdown(markdownForText, colorMap);
+      const corrected = renderMarkdown(markdownForText);
       const correctedHeading = corrected.headings.find((heading) => heading.level === 1);
       if (correctedHeading) titleText = correctedHeading.text;
 
@@ -532,10 +514,6 @@ for (const page of pages) {
   <button class="rail-tab" data-action="menu">Saturs</button>
 </aside>`;
 
-  const colorBar = colorMap
-    ? `<div class="color-bar"><label><input type="checkbox" data-color-toggle checked> <span>Krāsas</span></label></div>`
-    : "";
-
   const body = head({
     title: `${titleText} — ${SITE_TITLE}`,
     description,
@@ -545,7 +523,6 @@ for (const page of pages) {
 <div class="container">
 ${breadcrumb(page)}
 ${pageHead(page, titleText)}
-${colorBar}
 <article>
 ${article}
 </article>
